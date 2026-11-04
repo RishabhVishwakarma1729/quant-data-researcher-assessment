@@ -1,0 +1,10 @@
+{
+  "p": "n",
+  "k": 0.5,
+  "w": 60,
+  "h": 2,
+  "side": "both",
+  "cost_per_side": 0.0005,
+  "n_variants_tried": 18,
+  "reality_check_p": 0.003
+}

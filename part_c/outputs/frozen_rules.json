@@ -1,0 +1,27 @@
+{
+  "frozen_at": "2026-11-03 15:49:13",
+  "what_this_means": "rules and code below were fixed BEFORE the locked 2022-2025 data was opened",
+  "params": {
+    "p": "n",
+    "k": 0.5,
+    "w": 60,
+    "h": 2,
+    "side": "both",
+    "cost_per_side": 0.0005,
+    "n_variants_tried": 18,
+    "reality_check_p": 0.003
+  },
+  "code_hashes": {
+    "strategy.py": "a8e2ad384fa0c52976c7fbcb41f5ac484ca44082b41a1702ad226f7b324a924b",
+    "common.py": "21f848069cae916599797093f88092442dc2b56748c3f4c7ae5bc236bc5dc3dc",
+    "06_run_oos.py": "3f9138cf2729ae8b8e3c3dee3c142636493f62f1c3bd6b37f15af5e862a23291"
+  },
+  "locked_data_hashes": {
+    "nifty50_locked.csv": "cac23f01f1842cffb0ddc2df28455d01eee3f90b8b8e034adec92082989f4c65",
+    "banknifty_locked.csv": "04f2689b1e8c39baf2c39e168bfe37721e6da6fa6dcd2f54c2810dda9db7f328"
+  },
+  "research_result_hashes": {
+    "grid_research.csv": "c3719db82959924bf70c000487e3192e9972fd4ba440f74cda9dbc120fe6b941",
+    "selected_params.json": "92babeb072fe2d90cdc3aca41dc7bf8045fd24af27f8ed8ae37a5b34c600b7e5"
+  }
+}

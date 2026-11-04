@@ -1,0 +1,76 @@
+NSE - National Stock Exchange of India Ltd. 
+Market Timings & Holidays
+Holidays for the calendar year 2016 : Equity Derivatives
+Trading Holidays
+Clearing Holidays
+Sr. No. | Date | Day | Description | 
+1 | 26-Jan-2016 | Tuesday | Republic Day | 
+2 | 07-Mar-2016 | Monday | Mahashivratri | 
+3 | 24-Mar-2016 | Thursday | Holi | 
+4 | 25-Mar-2016 | Friday | Good Friday | 
+5 | 14-Apr-2016 | Thursday | Dr. Baba Saheb Ambedkar Jayanti | 
+6 | 15-Apr-2016 | Friday | Ram Navami | 
+7 | 19-Apr-2016 | Tuesday | Mahavir Jayanti | 
+8 | 06-Jul-2016 | Wednesday | Id-uI-Fitar (Ramzan ID) | 
+9 | 15-Aug-2016 | Monday | Independence Day | 
+10 | 05-Sep-2016 | Monday | Ganesh Chaturthi | 
+11 | 13-Sep-2016 | Tuesday | Bakri ID | 
+12 | 11-Oct-2016 | Tuesday | Dasera | 
+13 | 12-Oct-2016 | Wednesday | Moharram | 
+14 | 31-Oct-2016 | Monday | Diwali-Balipratipada | 
+15 | 14-Nov-2016 | Monday | Gurunanak Jayanti | 
+The holidays falling on Saturday / Sunday are as follows:
+Sr. No. | Date | Day | Description | 1 | 01-May-2016 | Sunday | Maharashtra Day | 
+2 | 02-Oct-2016 | Sunday | Mahatma Gandhi Jayanti | 
+3 | 30-Oct-2016 | Sunday | Diwali-Laxmi Pujan* | 
+4 | 25-Dec-2016 | Sunday | Christmas | 
+Sr. No. | Date | Day | Description | 
+1 | 26-Jan-2016 | Tuesday | Republic Day | 
+2 | 19-Feb-2016 | Friday | Chhatrapati Shivaji Maharaj Jayanti | 
+3 | 07-Mar-2016 | Monday | Mahashivratri | 
+4 | 24-Mar-2016 | Thursday | Holi | 
+5 | 25-Mar-2016 | Friday | Good Friday | 
+6 | 01-Apr-2016 | Friday | Annual Closing of Banks | 
+7 | 08-Apr-2016 | Friday | Gudi Padwa | 
+8 | 14-Apr-2016 | Thursday | Dr. Baba Saheb Ambedkar Jayanti | 
+9 | 15-Apr-2016 | Friday | Ram Navami | 
+10 | 19-Apr-2016 | Tuesday | Mahavir Jayanti | 
+11 | 06-Jul-2016 | Wednesday | Id-Ul-Fitr (Ramzan ID) | 
+12 | 15-Aug-2016 | Monday | Independence Day | 
+13 | 17-Aug-2016 | Wednesday | Parsi New Year | 
+14 | 05-Sep-2016 | Monday | Ganesh Chaturthi | 
+15 | 13-Sep-2016 | Tuesday | Bakri ID | 
+16 | 11-Oct-2016 | Tuesday | Dasera | 
+17 | 12-Oct-2016 | Wednesday | Moharram | 
+18 | 31-Oct-2016 | Monday | Diwali-Balipratipada | 
+19 | 14-Nov-2016 | Monday | Gurunanak Jayanti | 
+20 | 12-Dec-2016 | Monday | Id-E-Milad | 
+Trading on the derivatives segment takes place on all days of the week (except Saturdays and Sundays and holidays declared by the Exchange in advance). The market timings of the derivatives segment are:
+Normal market / Exercise market open time : 09:15 hrs
+Normal market close time : 15:30 hrs
+Setup cutoff time for Position limit/Collateral value : 16:15hrs
+Trade modification / Exercise market end time : 16:15hrs
+Note: The Exchange may however close the market on days other than the above schedule holidays or may open the market on days originally declared as holidays. The Exchange may also extend, advance or reduce trading hours when its deems fit and necessary.
+Related Links
+Watch the market live!
+Equities Stock Watch
+Charts
+Map of the Market
+Get real-time market analyses!
+Top Ten Gainers
+Top Ten Losers
+Most Active Securities / Contracts
+More about our Risk Management practices
+NSCCL
+You may also be 
+interested in:
+Verifying your trades
+Registering a complaint
+Getting NSE certification
+Did You Know
+The higher the Percent of Deliverable Quantity to Traded Quantity the better - it indicates that most buyers are expecting the price of the share to go up.
+More investment concepts
+Privacy Policy
+Disclaimer
+Sitemap
+Copyright 2010 National Stock Exchange of India Ltd. All rights reserved. 

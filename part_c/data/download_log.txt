@@ -1,0 +1,6 @@
+download run at 2026-11-03 15:28:09
+source: yahoo finance via the yfinance python package
+nifty50 research: 2449 rows, 2012-01-03 to 2021-12-31
+nifty50 locked: saved, not inspected
+banknifty research: 2461 rows, 2012-01-02 to 2021-12-31
+banknifty locked: saved, not inspected

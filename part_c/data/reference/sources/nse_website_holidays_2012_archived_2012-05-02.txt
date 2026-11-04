@@ -1,0 +1,70 @@
+NSE - National Stock Exchange of India Ltd. 
+Market Timings & Holidays
+Holidays for the calendar year 2012
+Trading Holidays
+Clearing Holidays
+Sr. No. | Date | Day | Description | 
+1 | 26-Jan-2012 | Thursday | Republic Day | 
+2 | 20-Feb-2012 | Monday | Mahashivratri | 
+3 | 08-Mar-2012 | Thursday | Holi | 
+4 | 05-Apr-2012 | Thursday | Mahavir Jayanti | 
+5 | 06-Apr-2012 | Friday | Good Friday | 
+6 | 01-May-2012 | Tuesday | May Day | 
+7 | 15-Aug-2012 | Wednesday | Independence Day | 
+8 | 20-Aug-2012 | Monday | Ramzan Id | 
+9 | 19-Sep-2012 | Wednesday | Ganesh Chaturthi | 
+10 | 02-Oct-2012 | Tuesday | Gandhi Jayanti | 
+11 | 24-Oct-2012 | Wednesday | Dasara | 
+12 | 13-Nov-2012 | Tuesday | Laxmi Puja* | 
+13 | 14-Nov-2012 | Wednesday | Diwali-Balipratipada | 
+14 | 28-Nov-2012 | Wednesday | Gurunanak Jayanti | 
+15 | 25-Dec-2012 | Tuesday | Christmas | 
+Sr. No. | Date | Day | Description | 
+1 | 26-Jan-2012 | Thursday | Republic Day | 
+2 | 16-Feb-2012 | Thursday | General Election of Brihan Mumbai Mahanagar Palika | 
+3 | 20-Feb-2012 | Monday | Mahashivratri | 
+4 | 08-Mar-2012 | Thursday | Holi | 
+5 | 23-Mar-2012 | Friday | Gudi Padwa | 
+6 | 02-Apr-2012 | Monday | Annual Closing of Banks | 
+7 | 05-Apr-2012 | Thursday | Mahavir Jayanti | 
+8 | 06-Apr-2012 | Friday | Good Friday | 
+9 | 01-May-2012 | Tuesday | May Day | 
+10 | 02-Jul-2012 | Monday | Annual Closing of RBI | 
+11 | 15-Aug-2012 | Wednesday | Independence Day | 
+12 | 20-Aug-2012 | Monday | Ramzan ID | 
+13 | 19-Sep-2012 | Wednesday | Ganesh Chaturthi | 
+14 | 02-Oct-2012 | Tuesday | Gandhi Jayanti | 
+15 | 24-Oct-2012 | Wednesday | Dasara | 
+16 | 13-Nov-2012 | Tuesday | Laxmi Puja* | 
+17 | 14-Nov-2012 | Wednesday | Diwali-Balipratipada | 
+18 | 28-Nov-2012 | Wednesday | Gurunanak Jayanti | 
+19 | 25-Dec-2012 | Tuesday | Christmas | 
+Trading on the derivatives segment takes place on all days of the week (except Saturdays and Sundays and holidays declared by the Exchange in advance). The market timings of the derivatives segment are:
+Normal market / Exercise market open time : 09:15 hrs
+Normal market close time : 15:30 hrs
+Setup cutoff time for Position limit/Collateral value : 16:15hrs
+Trade modification / Exercise market end time : 16:15hrs
+Note: The Exchange may however close the market on days other than the above schedule holidays or may open the market on days originally declared as holidays. The Exchange may also extend, advance or reduce trading hours when its deems fit and necessary.
+Related Links
+Watch the market live!
+Equities Stock Watch
+Charts
+Map of the Market
+Get real-time market analyses!
+Top Ten Gainers
+Top Ten Losers
+Most Active Securities / Contracts
+More about our Risk Management practices
+NSCCL
+You may also be 
+interested in:
+Verifying your trades
+Registering a complaint
+Getting NSE certification
+Did You Know
+The higher the Percent of Deliverable Quantity to Traded Quantity the better - it indicates that most buyers are expecting the price of the share to go up.
+More investment concepts
+Privacy Policy
+Disclaimer
+Sitemap
+Copyright ? 2010 National Stock Exchange of India Ltd. All rights reserved. 
