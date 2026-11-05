@@ -30,6 +30,10 @@ The scan is `code/03_anomaly_scan.py`. It writes one row per test to `outputs/ta
 
 Many tests are about risk, not direction (for example volatility clustering and fat tails). They are very significant, but they cannot be traded with next-open entry, so they cannot be the rule. That is why the plan's first criterion matters.
 
+An example is the chart below: the solid lines are the autocorrelation of absolute returns, which stays clearly positive for weeks (big moves follow big moves), and the dotted lines are plain returns, which hardly correlate at all (the direction of the next day is not predicted).
+
+![Autocorrelation of returns and of absolute returns](../figures/03_vol_clustering_acf.png)
+
 ## 3. How the gap test works
 
 - **The overnight gap** of day t is how far the market opens from the previous close: gap = ln(open of day t / close of day t-1). One standard deviation of the Nifty gap is about 63 basis points (1 basis point = 0.01%).

@@ -129,6 +129,10 @@ Nifty closed at exactly the same level as the previous day on 3 days (2014-05-14
 Their ranges and volumes look normal. With a 0.05 tick and daily moves of ~60 points I'd expect about one such coincidence in 10 years,
 so three is a bit high but not alarming. I left them in (they are real bars, just with an unchanged close).
 
+The chart shows both indices over the research period (Bank Nifty divided by 2 so the two fit on one scale) and the Nifty daily returns, with the days that moved more than 5% in either index marked in red. The cluster in 2020 is the covid crash.
+
+![Research period, cleaned: index levels and daily returns](../figures/01_data_overview.png)
+
 ## 6. Check against NSE's official holiday lists
 
 The file data/reference/nse_trading_holidays_2012_2021.csv has every weekday trading holiday of 2012-2021 with its source on each row.

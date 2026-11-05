@@ -62,7 +62,7 @@ Rishabh Vishwakarma. Technical assessment, Part C. Data: Nifty 50 and Bank Nifty
 | ML: outliers | Isolation forest (49 days flagged, 65% of them in 2020) | No effect after outlier days (p above 0.46) |
 | ML: direction | Walk-forward logistic and gradient boosting, 2016-2021 | Logistic 54.6% vs 54.6% baseline (Nifty); boosting 51.4% vs 54.6%. No skill |
 
-- The gap result held up under the checks I could think of: winsorising at 1%/99% (t about 4), dropping 2020 (t 3.3 for Nifty and 2.3 for Bank Nifty), rank correlation (p < 0.0001), a monotonic quintile pattern, and a positive sign in 9 of 10 years (about zero in 2017-2019).
+- The gap result held up under the checks I could think of: winsorising at 1%/99% (t about 4), dropping 2020 (t 3.3 for Nifty and 2.3 for Bank Nifty), rank correlation (p < 0.0001), a monotonic quintile pattern (Nifty), and a positive sign in 9 of 10 years (about zero in 2017-2019).
 - The same rule driven by close-to-close or intraday returns, or by shuffled gaps, loses money (see `outputs/pdf/gap_diagnostics.pdf` and `outputs/pdf/mechanism_checks.pdf`).
 
 ![p-values](../outputs/figures/02_pvalue_histograms.png)

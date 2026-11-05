@@ -102,6 +102,10 @@ say("")                                                     # blank line
 say("Many tests are about risk, not direction (for example volatility clustering and fat tails). They are very significant, but they cannot be traded with next-open entry, "
     "so they cannot be the rule. That is why the plan's first criterion matters.")   # why not everything is a candidate
 say("")                                                     # blank line
+say("An example is the chart below: the solid lines are the autocorrelation of absolute returns, which stays clearly positive for weeks (big moves follow big moves), and the dotted lines are plain returns, which hardly correlate at all (the direction of the next day is not predicted).")   # what the picture shows
+say("")                                                     # blank line
+say("![Autocorrelation of returns and of absolute returns](../figures/03_vol_clustering_acf.png)")   # the picture made by 03_anomaly_scan.py (path is relative to outputs/markdown)
+say("")                                                     # blank line
 
 # ---------------------------------------------------------------- 3. how the gap test works
 say("## 3. How the gap test works")                         # section heading

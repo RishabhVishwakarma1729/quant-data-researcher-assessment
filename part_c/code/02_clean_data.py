@@ -183,6 +183,10 @@ say("Nifty closed at exactly the same level as the previous day on %d days (%s).
 say("Their ranges and volumes look normal. With a 0.05 tick and daily moves of ~60 points I'd expect about one such coincidence in 10 years,")   # why they are not alarming, part 1
 say("so three is a bit high but not alarming. I left them in (they are real bars, just with an unchanged close).")   # why they are not alarming, part 2
 say("")                                     # blank line
+say("The chart shows both indices over the research period (Bank Nifty divided by 2 so the two fit on one scale) and the Nifty daily returns, with the days that moved more than 5% in either index marked in red. The cluster in 2020 is the covid crash.")   # what the picture shows
+say("")                                     # blank line
+say("![Research period, cleaned: index levels and daily returns](../figures/01_data_overview.png)")   # the picture saved further down by this script (path is relative to outputs/markdown)
+say("")                                     # blank line
 
 # ---------------------------------------------------------------- 6. check against nse's official holiday lists
 say("## 6. Check against NSE's official holiday lists")   # section heading

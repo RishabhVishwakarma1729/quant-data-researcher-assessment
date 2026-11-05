@@ -85,6 +85,13 @@ for p, nm in [("n", "Nifty50"), ("b", "BankNifty")]:   # the same checks for bot
     say("positive in %d of 10 years" % int((yt["effect bps per 1sd gap"] > 0).sum()))   # in how many years the effect is above zero
     say("")                                         # blank line
 
+say("## Picture: average next tradable day return by gap quintile")   # a heading for the chart
+say("")                                             # blank line
+say("Quintile 1 holds the days that follow the biggest gaps down and quintile 5 the days that follow the biggest gaps up. The bars rise from left to right in both indices (in Bank Nifty quintile 2 is slightly above quintile 3).")   # what the picture shows
+say("")                                             # blank line
+say("![Average next tradable day return by gap quintile](../figures/04_gap_quintiles.png)")   # the picture saved further down by this script (path is relative to outputs/markdown)
+say("")                                             # blank line
+
 # does it hold on both sides? the hypothesis says a big gap up is followed by more buying and a big gap down by more selling
 say("## Does it hold on both sides? (the rule's own signal: threshold 0.5, window 60)")   # a heading for this section
 for p, nm in [("n", "Nifty50"), ("b", "BankNifty")]:   # the same check for both indices

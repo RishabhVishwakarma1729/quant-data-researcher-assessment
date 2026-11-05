@@ -58,6 +58,10 @@ Net Sharpe excluding 2020: 1.13 (full period 1.25)
 
 Same rule, same parameters on **Bank Nifty** (no re-tuning): net Sharpe 0.79, CAGR 16.7%, max DD -26.7%, 687 trades.
 
+The chart shows the growth of 1 for the chosen rule after costs (solid) and before costs (dotted) against buy and hold, with the drawdown of the rule underneath. The thin vertical line at the start of 2017 separates the two halves used for the half-period Sharpe columns above.
+
+![Research period: growth of 1 and drawdown](../figures/05_equity_research.png)
+
 ## 4. How much do costs matter?
 
 |   cost per side % |   net Sharpe |   CAGR % |
@@ -123,6 +127,10 @@ P(4-year max drawdown worse than 10%) = 99%, worse than 15% = 81%, worse than 20
 Historical max drawdown of the rule in the research period: -16.7%.
 
 Caveat: the bootstrap only captures sampling noise. It cannot see regime change or the selection bias of picking this rule out of many ideas, so scenario 2 is the one i would plan around.
+
+Left and middle: net Sharpe of the 18 variants of the grid, trading both sides and long only (threshold k down, holding days across). Right: the bootstrap distribution of the worst drawdown over about four years, with the worst 5% of paths marked.
+
+![Grid of variants and bootstrap drawdown](../figures/06_grid_and_drawdown.png)
 
 ## 7. How much is just market exposure?
 

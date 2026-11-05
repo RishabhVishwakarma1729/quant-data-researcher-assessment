@@ -87,3 +87,7 @@ Actual out-of-sample Sharpe 0.82. Share of simulated paths with a Sharpe at leas
 
 Bootstrap 95% confidence interval for the out-of-sample Sharpe (resampling the out-of-sample days): -0.22 to 1.83 (median 0.82).
 
+**Chart (the figure the run saved as `outputs/figures/08_oos_only_oos.png`; I added it to this report on 5 Nov 2026, no number was changed).** Left: growth of 1 over the out-of-sample period only, after costs (solid), before costs (dotted) and buy and hold; the strategy line is flat at 1.0 at the start because the rule held no position until April 2022 (see the reading note at the top). Right: the actual maximum drawdown (red line) against the two bootstrap scenarios from section 5.
+
+![Out-of-sample period only: growth of 1, and the actual drawdown against the bootstrap scenarios](../figures/08_oos_only_oos.png)
+

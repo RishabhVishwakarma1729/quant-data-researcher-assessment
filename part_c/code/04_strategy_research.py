@@ -183,6 +183,10 @@ st_b = perf_stats(bt_b["net"], tr_b)                    # its performance number
 say("Same rule, same parameters on **Bank Nifty** (no re-tuning): net Sharpe %.2f, CAGR %.1f%%, max DD %.1f%%, %d trades."
     % (st_b["Sharpe"], st_b["CAGR %"], st_b["Max drawdown %"], st_b["Trades"]))   # the replication result
 say("")                                                 # blank line
+say("The chart shows the growth of 1 for the chosen rule after costs (solid) and before costs (dotted) against buy and hold, with the drawdown of the rule underneath. The thin vertical line at the start of 2017 separates the two halves used for the half-period Sharpe columns above.")   # what the picture shows
+say("")                                                 # blank line
+say("![Research period: growth of 1 and drawdown](../figures/05_equity_research.png)")   # the picture saved further down by this script (path is relative to outputs/markdown)
+say("")                                                 # blank line
 
 # cost sensitivity
 say("## 4. How much do costs matter?")                 # section heading
@@ -266,6 +270,10 @@ mdd_half = mc_table(haircut, "Scenario 2: only half of the measured edge is real
 say("Historical max drawdown of the rule in the research period: %.1f%%." % st_all["Max drawdown %"])   # what really happened
 say("")                                                 # blank line
 say("Caveat: the bootstrap only captures sampling noise. It cannot see regime change or the selection bias of picking this rule out of many ideas, so scenario 2 is the one i would plan around.")   # a warning about the limits
+say("")                                                 # blank line
+say("Left and middle: net Sharpe of the 18 variants of the grid, trading both sides and long only (threshold k down, holding days across). Right: the bootstrap distribution of the worst drawdown over about four years, with the worst 5% of paths marked.")   # what the picture shows
+say("")                                                 # blank line
+say("![Grid of variants and bootstrap drawdown](../figures/06_grid_and_drawdown.png)")   # the picture saved further down by this script (path is relative to outputs/markdown)
 say("")                                                 # blank line
 
 # alpha / beta against always-long nifty

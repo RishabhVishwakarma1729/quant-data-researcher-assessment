@@ -70,6 +70,12 @@ By calendar year:
 |   2021 |                     10.7 |  1.23 |
 positive in 8 of 10 years
 
+## Picture: average next tradable day return by gap quintile
+
+Quintile 1 holds the days that follow the biggest gaps down and quintile 5 the days that follow the biggest gaps up. The bars rise from left to right in both indices (in Bank Nifty quintile 2 is slightly above quintile 3).
+
+![Average next tradable day return by gap quintile](../figures/04_gap_quintiles.png)
+
 ## Does it hold on both sides? (the rule's own signal: threshold 0.5, window 60)
 ### Nifty50
 |                      |   mean next tradable day (bps) |   t-stat |   days |

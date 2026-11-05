@@ -44,7 +44,11 @@ outputs/
   markdown/                  the same eight reports as markdown
   tables/anomaly_scan_all_tests.csv   every test, raw / Bonferroni / BH p-values
   frozen_rules.json, oos_run.lock     freeze record
-  figures/                   charts used in the note
+  figures/                   the eight charts, each shown in a document:
+                             02 p-value histograms and 07 equity curve 2012-2025 (research note); 01 data overview (data quality report);
+                             03 autocorrelation (how the rule was found); 04 gap quintiles (gap diagnostics);
+                             05 equity curve of the research period and 06 grid and bootstrap drawdown (strategy research);
+                             08 out-of-sample period only (out-of-sample results)
 ```
 
 ## Data sources
