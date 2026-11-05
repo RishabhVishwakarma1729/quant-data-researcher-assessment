@@ -19,7 +19,7 @@ code/
   02c_build_nse_index_reference.py  rebuilds data/reference/nse_index_ohlc_2012_2021.csv from NSE's daily index files; it downloads them from NSE because the repository does not include them (--locked: 2022-2025)
   02d_build_nse_volume_reference.py  rebuilds data/reference/nse_volume_2012_2021.csv (volume and turnover of both indices as published by NSE) from the daily files that 02c downloaded (--locked: 2022-2025)
   03_anomaly_scan.py         step 2: 98 tests, multiple-testing adjustment (--nse-filled: side check on research data plus NSE's bars for the days Yahoo lacks)
-  03b_gap_diagnostics.py     robustness checks on the gap effect
+  03b_gap_diagnostics.py     robustness checks on the gap effect (also: does it hold after a gap up and after a gap down)
   03c_how_the_rule_was_found.py  writes outputs/markdown/how_the_rule_was_found.md (the story of how the rule was found, with every number read from my own output files; run it after 03, 03b and 04)
   test_engine.py             no-look-ahead and cost-accounting tests
   04_strategy_research.py    steps 4-5 on the research period (grid, reality check, sensitivity, bootstrap); --nse-filled: grid + reality check side check

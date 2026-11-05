@@ -70,6 +70,23 @@ By calendar year:
 |   2021 |                     10.7 |  1.23 |
 positive in 8 of 10 years
 
+## Does it hold on both sides? (the rule's own signal: threshold 0.5, window 60)
+### Nifty50
+|                      |   mean next tradable day (bps) |   t-stat |   days |
+|:---------------------|-------------------------------:|---------:|-------:|
+| after a big gap up   |                           15.8 |     4.87 |    971 |
+| after a big gap down |                          -15.4 |    -2.2  |    371 |
+| after a small gap    |                            1.9 |     0.66 |   1040 |
+| all days             |                            4.9 |     2.19 |   2382 |
+
+### BankNifty
+|                      |   mean next tradable day (bps) |   t-stat |   days |
+|:---------------------|-------------------------------:|---------:|-------:|
+| after a big gap up   |                           15.9 |     3.05 |    836 |
+| after a big gap down |                          -18   |    -1.96 |    405 |
+| after a small gap    |                            5.4 |     1.25 |   1141 |
+| all days             |                            5.1 |     1.56 |   2382 |
+
 ## Which piece of yesterday predicts tomorrow? (Nifty, joint regression)
 n_fwd on gap and intraday together:
 |         |   coef |      t |

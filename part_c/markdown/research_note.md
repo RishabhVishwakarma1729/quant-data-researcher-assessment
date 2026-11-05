@@ -52,7 +52,7 @@ Rishabh Vishwakarma. Technical assessment, Part C. Data: Nifty 50 and Bank Nifty
 | Volatility clustering | Ljung-Box on squared returns, ARCH-LM | Overwhelming (p near 0), but it is about risk, not direction |
 | Fat tails | Jarque-Bera, excess kurtosis | 18.2 (Nifty), 12.5 (Bank Nifty). Not normal |
 | Random walk tests | Ljung-Box on returns, variance ratios, runs test | Weak positive autocorrelation in close-to-close returns (p about 0.001); variance ratios p above 0.06 |
-| Overnight vs intraday | Mean overnight and intraday return | Overnight +12.6 bps/day, intraday -7.2 bps/day (Nifty), highly significant, but can't be captured with next-open entry |
+| Overnight vs intraday | Mean overnight and intraday return | Overnight +12.6 bps/day, intraday -7.2 bps/day (Nifty), highly significant, but not capturable at the next open |
 | **Gaps (tradable)** | Yesterday's gap vs next open-to-open return | **Survives**: Nifty p = 0.0001 (BH 0.0008, Bonferroni 0.009), Bank Nifty BH 0.016 |
 | Day of week | 24 tests | No effect found. Best raw p = 0.045 (Monday), BH 0.23 |
 | Expiry week / day, turn of month | 16 tests | No effect found. Best raw p = 0.26 |
@@ -63,16 +63,16 @@ Rishabh Vishwakarma. Technical assessment, Part C. Data: Nifty 50 and Bank Nifty
 | ML: direction | Walk-forward logistic and gradient boosting, 2016-2021 | Logistic 54.6% vs 54.6% baseline (Nifty); boosting 51.4% vs 54.6%. No skill |
 
 - The gap result held up under the checks I could think of: winsorising at 1%/99% (t about 4), dropping 2020 (t 3.3 for Nifty and 2.3 for Bank Nifty), rank correlation (p < 0.0001), a monotonic quintile pattern, and a positive sign in 9 of 10 years (about zero in 2017-2019).
-- The same rule driven by close-to-close or intraday returns, or by shuffled gaps, loses money. Details are in `outputs/pdf/gap_diagnostics.pdf` and `outputs/pdf/mechanism_checks.pdf`.
+- The same rule driven by close-to-close or intraday returns, or by shuffled gaps, loses money (see `outputs/pdf/gap_diagnostics.pdf` and `outputs/pdf/mechanism_checks.pdf`).
 
 ![p-values](../outputs/figures/02_pvalue_histograms.png)
 
 ## 5. Hypothesis (Step 3): who is on the other side
 
-- I had this reasoning when I froze the rule, but it was written up after the out-of-sample run (only the plan file came first), so please treat it as an explanation that fits, not a pre-registered claim.
-- **Idea:** the overnight gap carries news that arrived while India was shut (US close, Asia, GIFT Nifty). Foreign institutions are the marginal price setters in Nifty and they split big orders over several days to limit their impact, so a large gap up suggests more buying in the next day or two.
+- I had this reasoning when I froze the rule but wrote it up after the out-of-sample run (only the plan file came first), so it is an explanation that fits, not a pre-registered claim.
+- **Idea:** the overnight gap carries news that arrived while India was shut (US close, Asia, GIFT Nifty). Foreign institutions are the marginal price setters in Nifty and they split big orders over several days to limit their impact, so a large gap up suggests more buying in the next day or two, and a large gap down more selling. Both show up, the upside more clearly (t 4.9 against -2.2 in Nifty).
 - **Likely counterparties:** domestic retail and intraday traders who fade gaps ("gap fill"), and liquidity providers who are slow to move their quotes.
-- **Why it may not be arbitraged away:** the effect is small against costs (the best bucket earned about 25 bps against a 10 bps round-trip cost), it is lumpy, and most of the money came in volatile periods that put people off.
+- **Why it may not be arbitraged away:** the effect is small against costs (best bucket about 25 bps against a 10 bps round trip), lumpy, and most of the money came in volatile periods that put people off.
 - I have no direct evidence for this story, as I have no flow data. The alternatives I could not rule out are:
   - Chance, since this was the best of about 100 tests.
   - A quirk of the 2012-2021 sample, in which overnight returns were very positive and intraday returns negative.

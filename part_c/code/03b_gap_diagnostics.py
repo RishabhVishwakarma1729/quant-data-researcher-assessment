@@ -13,6 +13,7 @@ matplotlib.use("Agg")                               # no pop-up windows, the fig
 import matplotlib.pyplot as plt                     # the plotting commands
 
 from common import OUT_DIR, FIG_DIR                 # output folders
+from strategy import gap_signal                     # the rule's own signal: +1 after a big gap up, -1 after a big gap down, 0 otherwise
 
 px = pd.read_pickle(os.path.join(OUT_DIR, "research_features.pkl"))   # saved by 03_anomaly_scan.py
 lines = []                                          # for the markdown output
@@ -82,6 +83,26 @@ for p, nm in [("n", "Nifty50"), ("b", "BankNifty")]:   # the same checks for bot
     say("By calendar year:")                        # a small heading
     say(yt.to_markdown(index=False))                # the ten years as a table
     say("positive in %d of 10 years" % int((yt["effect bps per 1sd gap"] > 0).sum()))   # in how many years the effect is above zero
+    say("")                                         # blank line
+
+# does it hold on both sides? the hypothesis says a big gap up is followed by more buying and a big gap down by more selling
+say("## Does it hold on both sides? (the rule's own signal: threshold 0.5, window 60)")   # a heading for this section
+for p, nm in [("n", "Nifty50"), ("b", "BankNifty")]:   # the same check for both indices
+    sig = gap_signal(px, p, 0.5, 60)                # +1 after a big gap up, -1 after a big gap down, 0 after a small gap
+    ok = px[p + "_gap"].rolling(60).std().shift(1).notna() & px[p + "_fwd"].notna()   # skip the first 60 days (no gap history yet) and days without a next-day return
+    d = pd.DataFrame({"fwd": px.loc[ok, p + "_fwd"] * 1e4,                  # next tradable day return, in basis points
+                      "after a big gap up": (sig[ok] == 1).astype(float),   # 1 on the days that follow a big gap up, else 0
+                      "after a big gap down": (sig[ok] == -1).astype(float),   # 1 on the days that follow a big gap down, else 0
+                      "after a small gap": (sig[ok] == 0).astype(float)})   # 1 on all the other days, else 0
+    groups = ["after a big gap up", "after a big gap down", "after a small gap"]   # the three groups that split every day
+    res = sm.OLS(d["fwd"], d[groups]).fit(cov_type="HAC", cov_kwds={"maxlags": 5})   # no constant, so each coefficient is simply the average of its group (t-stat against zero, newey-west)
+    allres = sm.OLS(d["fwd"], np.ones(len(d))).fit(cov_type="HAC", cov_kwds={"maxlags": 5})   # the average over all days, for comparison
+    tab = pd.DataFrame({"mean next tradable day (bps)": res.params.round(1),   # average next-day return of each group
+                        "t-stat": res.tvalues.round(2),                        # how far that average is from zero
+                        "days": d[groups].sum().astype(int)})                  # how many days are in the group
+    tab.loc["all days"] = [round(float(allres.params.iloc[0]), 1), round(float(allres.tvalues.iloc[0]), 2), len(d)]   # add the all-days row
+    say("### " + nm)                                # a heading for this index
+    say(tab.to_markdown())                          # the table
     say("")                                         # blank line
 
 # is it about the gap or about the whole day? compare gap vs close-to-close vs intraday as predictors, nifty
