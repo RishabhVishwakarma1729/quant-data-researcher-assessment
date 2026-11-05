@@ -10,7 +10,7 @@ Thank you for reviewing my submission. A short guide to the folders follows.
 |---|---|---|
 | A | `part_a/pdf/part_a_answers.pdf` | six short answers (all under 200 words) |
 | B | `part_b/` | `pdf/issues.pdf` (review of the script, with suggested fixes), `outputs/pdf/ladder.pdf` (Sharpe after each fix), `original_script.py` (the original script, untouched), `corrected_script.py`, `compare_fixes.py` (applies the fixes one at a time and shows the Sharpe after each) |
-| C | `part_c/` | `pdf/research_note.pdf` (5 pages), the code, the data, all outputs (reports in `outputs/pdf/`), and its own `README.md` |
+| C | `part_c/` | `pdf/research_note.pdf` (5 pages), `outputs/pdf/how_the_rule_was_found.pdf` (how I found the rule, step by step), the code, the data, all outputs (reports in `outputs/pdf/`), and its own `README.md` |
 
 Layout: wherever a folder holds both formats, the PDFs are in a `pdf/` sub-folder and the markdown sources are in a `markdown/` sub-folder (`part_a`, `part_b`, `part_b/outputs`, `part_c`, `part_c/outputs`). The two `README.md` files stay at the top of their folders.
 
@@ -44,6 +44,7 @@ python 02c_build_nse_index_reference.py   # optional: rebuilds the NSE index pri
 python 02d_build_nse_volume_reference.py  # optional: rebuilds the NSE volume csv from the daily files that 02c downloaded (run 02c first)
 python 03_anomaly_scan.py        # step 2, all 98 tests
 python 03b_gap_diagnostics.py    # checks on the one effect that survived
+python 03c_how_the_rule_was_found.py   # writes the report on how the rule was found (run it after 03, 03b and 04; it only reads research outputs)
 python test_engine.py            # sanity tests for the backtester
 python 04_strategy_research.py   # steps 4-5 on the research period
 python 04b_mechanism_checks.py   # where does the edge come from

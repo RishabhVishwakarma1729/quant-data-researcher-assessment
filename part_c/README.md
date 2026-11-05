@@ -20,6 +20,7 @@ code/
   02d_build_nse_volume_reference.py  rebuilds data/reference/nse_volume_2012_2021.csv (volume and turnover of both indices as published by NSE) from the daily files that 02c downloaded (--locked: 2022-2025)
   03_anomaly_scan.py         step 2: 98 tests, multiple-testing adjustment (--nse-filled: side check on research data plus NSE's bars for the days Yahoo lacks)
   03b_gap_diagnostics.py     robustness checks on the gap effect
+  03c_how_the_rule_was_found.py  writes outputs/markdown/how_the_rule_was_found.md (the story of how the rule was found, with every number read from my own output files; run it after 03, 03b and 04)
   test_engine.py             no-look-ahead and cost-accounting tests
   04_strategy_research.py    steps 4-5 on the research period (grid, reality check, sensitivity, bootstrap); --nse-filled: grid + reality check side check
   04b_mechanism_checks.py    where the edge comes from, alpha/beta, baselines
@@ -38,9 +39,9 @@ data/
                              the holiday csv names its source on every row, and 02c downloads the daily files again.
   download_log.txt
 outputs/
-  pdf/                       the seven reports as PDF (data quality, strategy research, out-of-sample results, gap diagnostics, mechanism checks,
+  pdf/                       the eight reports as PDF (data quality, how the rule was found, strategy research, out-of-sample results, gap diagnostics, mechanism checks,
                              post-hoc check of the locked data against NSE, side check on research data with NSE's bars added)
-  markdown/                  the same seven reports as markdown
+  markdown/                  the same eight reports as markdown
   tables/anomaly_scan_all_tests.csv   every test, raw / Bonferroni / BH p-values
   frozen_rules.json, oos_run.lock     freeze record
   figures/                   charts used in the note
@@ -90,8 +91,8 @@ The data is public and is used only for this assessment. Yahoo's and NSE's own t
 | Step | Where |
 |---|---|
 | 1 Data structuring | `outputs/pdf/data_quality_report.pdf`, `code/02_clean_data.py` |
-| 2 Anomaly discovery (classical + ML, including what failed) | `code/03_anomaly_scan.py`, `outputs/tables/anomaly_scan_all_tests.csv`, note section 4 |
-| 3 Hypothesis | note section 5 |
+| 2 Anomaly discovery (classical + ML, including what failed) | `code/03_anomaly_scan.py`, `outputs/tables/anomaly_scan_all_tests.csv`, note section 4; **how the rule was found, step by step: `outputs/pdf/how_the_rule_was_found.pdf`** |
+| 3 Hypothesis | note section 5; how the one anomaly was picked (the five criteria applied): `outputs/pdf/how_the_rule_was_found.pdf`, section 6 |
 | 4 Strategy | `code/strategy.py`, note section 6 |
 | 5 Validation (in and out of sample, equity curve, +/-20% sensitivity, bootstrap drawdown) | `outputs/pdf/strategy_research.pdf`, `outputs/pdf/oos_results.pdf`, note section 6 |
 | 6 Verdict | note section 7 |

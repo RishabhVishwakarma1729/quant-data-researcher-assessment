@@ -44,7 +44,7 @@ Rishabh Vishwakarma. Technical assessment, Part C. Data: Nifty 50 and Bank Nifty
 
 ## 4. What I tested (Step 2)
 
-- I ran **98 tests** and kept every one in `outputs/tables/anomaly_scan_all_tests.csv`, adjusting for multiple testing across the whole table (Bonferroni and Benjamini-Hochberg).
+- I ran **98 tests** and kept every one in `outputs/tables/anomaly_scan_all_tests.csv`, adjusting for multiple testing across the whole table (Bonferroni and Benjamini-Hochberg). How I got from the scan to the rule is told step by step in `outputs/pdf/how_the_rule_was_found.pdf`.
 - Of these, 43 could be traded with next-open entry, and 3 of those had a raw p-value under 0.05, where chance alone would give about 2.
 
 | Family | What I tested | Result |
