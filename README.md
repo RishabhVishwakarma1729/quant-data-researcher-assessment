@@ -14,6 +14,19 @@ Thank you for reviewing my submission. A short guide to the folders follows.
 
 Layout: wherever a folder holds both formats, the PDFs are in a `pdf/` sub-folder and the markdown sources are in a `markdown/` sub-folder (`part_a`, `part_b`, `part_b/outputs`, `part_c`, `part_c/outputs`). The two `README.md` files stay at the top of their folders.
 
+## Data sources
+
+The brief says to use the dataset it shares or, if none is attached, to download one from a free public source and state it. No dataset was attached, so everything below comes from free public sources. I did not use any paid data, any data from the company, or any other source.
+
+| Data | Source | How and when I got it | Where it is |
+|---|---|---|---|
+| Daily open, high, low, close and volume of the Nifty 50 and Nifty Bank indices, January 2012 to December 2025 (the data of the whole study) | **Yahoo Finance**, tickers `^NSEI` (Nifty 50) and `^NSEBANK` (Nifty Bank), raw unadjusted daily bars | Downloaded with the open-source `yfinance` package (version 0.2.55) by `part_c/code/01_download_data.py` on 3 Nov 2026, in two separate calls: 2012-2021 (research) and 2022-2025 (locked out-of-sample) | `part_c/data/research/`, `part_c/data/locked_oos/`, and the log `part_c/data/download_log.txt` |
+| The Nifty 50 file used in Part B | The same Yahoo download, 2012-2021 only | A copy of `nifty50_research.csv` with lower-case column names | `part_b/nifty_daily.csv` |
+| A check of the prices and volume | **NSE's own daily index files**, one file per trading day (`https://nsearchives.nseindia.com/content/indices/ind_close_all_DDMMYYYY.csv`), available from 21 Feb 2012 | Downloaded on 4 Nov 2026 by `part_c/code/02c_build_nse_index_reference.py` (about 3,400 files); only the Nifty 50 and Bank Nifty rows are kept | `part_c/data/reference/nse_index_ohlc_*.csv` and `nse_volume_*.csv` |
+| NSE trading holidays | NSE's yearly holiday **circulars** (2017-2025), **NSE's website as archived** on web.archive.org (2012, 2015, 2016), **Zerodha's copy** of the exchange list (2013, 2014), and news and NSE circulars for closures announced later | Read by `part_c/code/02b_build_nse_holidays.py`; the source is named on every row | `part_c/data/reference/nse_trading_holidays_*.csv` |
+
+Yahoo Finance is not the exchange file, so I checked it against NSE's own files (see `part_c/outputs/pdf/data_quality_report.pdf`). `yfinance` is an independent open-source tool and is not affiliated with Yahoo. The data is public and is used here only for this assessment; Yahoo's and NSE's own terms of use apply to it. The full list of sources, with every circular, is in `part_c/README.md`.
+
 ## Short version of the results
 
 - **Part B:** the original script prints a Sharpe of 13.7 on my 2012-2021 Nifty file. The main reasons are that the label is also a feature, features use today's close, the trade cannot be executed as written, and the train/test split is shuffled. After fixing everything the Sharpe is about 0 (0.21 before costs, 0.00 after).

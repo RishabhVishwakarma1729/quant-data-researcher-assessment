@@ -46,6 +46,45 @@ outputs/
   figures/                   charts used in the note
 ```
 
+## Data sources
+
+The brief says to use the dataset it shares or, if none is attached, to download one from a free public source and state it. No dataset was attached, so all data comes from the free public sources below. I did not use paid data, data from the company, order-flow or fund-flow data, or any other source. The first source is the data of the study; the NSE sources are only used to check it.
+
+**1. Prices and volume of the study: Yahoo Finance**
+
+- Tickers `^NSEI` (Nifty 50) and `^NSEBANK` (Nifty Bank), daily open, high, low, close and volume, raw and unadjusted (indices have no splits or dividends).
+- Downloaded with the open-source `yfinance` package (version 0.2.55, pinned in `requirements.txt`) by `code/01_download_data.py` on 3 Nov 2026. The two periods were fetched in separate calls and saved in separate folders: `data/research/` (2012-01-02 to 2021-12-31; 2,449 Nifty rows and 2,461 Bank Nifty rows) and `data/locked_oos/` (2022-2025). The run is recorded in `data/download_log.txt`.
+- `yfinance` is an independent tool and is not affiliated with Yahoo. Yahoo data is not versioned, so downloading again later can return slightly different history or gaps. The saved files are what every result in this repository was computed on.
+- Yahoo is not the exchange file. Its known problems (missing trading days, empty or zero volume, volume written in thousands of shares) are described in `outputs/pdf/data_quality_report.pdf`.
+
+**2. A check of prices and volume: NSE's own daily index files**
+
+- NSE publishes one file per trading day with the open, high, low, close, volume and turnover of all its indices, at `https://nsearchives.nseindia.com/content/indices/ind_close_all_DDMMYYYY.csv`. The files start on 21 Feb 2012.
+- I downloaded them on 4 Nov 2026 with `code/02c_build_nse_index_reference.py` (2,421 files for 2012-2021 and 992 for 2022-2025) and kept the Nifty 50 and Bank Nifty rows in `data/reference/nse_index_ohlc_*.csv` (prices, from `02c`) and `data/reference/nse_volume_*.csv` (volume and turnover, from `02d`). The raw files are not in the repository.
+- They are used to check Yahoo and to fill its gaps in side checks. They never replace Yahoo in the study.
+
+**3. NSE trading holidays**
+
+Every row of `data/reference/nse_trading_holidays_*.csv` names its own source. The sources are:
+
+| Year | Source |
+|---|---|
+| 2012, 2015, 2016 | NSE website page "Holidays for the calendar year ...", as archived on web.archive.org (2 May 2012, 17 Nov 2015 and 7 May 2016) |
+| 2013 | Zerodha's reproduction of the exchange list (`zerodha.com/z-connect/?p=60`), with the Muharram date as revised by NSE and BSE on 13 Nov 2013 (reported by Business Standard) |
+| 2014 | Zerodha's reproduction of the exchange list (`zerodha.com/z-connect/?p=2740`), which includes the two election closures |
+| 2017 to 2021 | NSE circulars NSE/FAOP/33750 (5 Dec 2016), NSE/CMTR/36475 (12 Dec 2017), 39612 (7 Dec 2018), 42877 (11 Dec 2019) and 46623 (11 Dec 2020) |
+| 2022 to 2025 | NSE circulars NSE/CMTR/50560 (10 Dec 2021), 54757 (8 Dec 2022), 59722 (12 Dec 2023) and 65587 (13 Dec 2024) |
+
+Closures announced after the yearly lists: 11 Nov 2015 (Diwali, Muhurat session only, from a Business Standard report), 29 Apr 2019 and 21 Oct 2019 (election days, NSE circulars), the Bakri Id move of 2023 (NSE/CMTR/57285 of 27 Jun 2023), and 22 Jan, 20 May and 20 Nov 2024. For the four changes of 2023-2024 I relied on press reports that quote the circulars, and NSE's own index files agree with each of them; I did not read those circulars themselves. The circular PDFs and archived pages are not in the repository.
+
+**Facts that did not come from a data file**
+
+- The Diwali Muhurat dates of 2022-2025 in `code/common.py` came from public knowledge and not from the data; NSE's circulars confirmed them afterwards.
+- The Nifty closes of the three real trading days missing from Yahoo (26 Oct 2012, 13 Feb 2019, 29 Mar 2019) were checked against news reports, quoted in the data quality report, and match NSE's own files.
+- I compared two Python calendar libraries (`exchange_calendars` and `holidays`) with the official lists. They disagree with each other and with NSE, so they are not a source of any data here.
+
+The data is public and is used only for this assessment. Yahoo's and NSE's own terms of use apply to it.
+
 ## The brief, step by step
 
 | Step | Where |

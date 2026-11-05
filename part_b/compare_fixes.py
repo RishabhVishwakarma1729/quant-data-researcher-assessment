@@ -1,6 +1,7 @@
 # compare_fixes.py
 # applies the suggested fixes one at a time (each step keeps the previous fixes) and prints the Sharpe after every step
 # so it is easy to see how much each point was adding to the original result. research data only (2012-2021)
+# data: nifty_daily.csv = nifty 50 (yahoo ticker ^NSEI) daily bars from yahoo finance, downloaded with yfinance on 3 nov 2026 (see the top-level README.md)
 
 import os                                              # for making the output folder
 import numpy as np                                      # maths

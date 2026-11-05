@@ -30,7 +30,7 @@ def say(text=""):                           # prints a line and keeps it for the
 
 say("# Data quality report (research period 2012-2021)")   # the report title
 say("")                                     # blank line
-say("Source: Yahoo Finance (tickers ^NSEI and ^NSEBANK) through the yfinance package. Raw, unadjusted daily bars.")   # where the data comes from
+say("Source: Yahoo Finance (tickers ^NSEI and ^NSEBANK) through the yfinance package, downloaded on 3 Nov 2026 (see data/download_log.txt). Raw, unadjusted daily bars. All data sources are listed in part_c/README.md.")   # where the data comes from
 say("Indices have no splits or dividends so no adjustment is needed. Section 3 compares the volume with NSE's own numbers, section 6 checks the dates against NSE's holiday lists and section 7 checks the prices against NSE's own index files.")   # what the later sections do
 say("")                                     # blank line
 

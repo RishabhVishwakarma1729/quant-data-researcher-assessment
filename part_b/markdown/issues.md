@@ -89,4 +89,4 @@
 - `original_script.py`: the original script, unchanged
 - `corrected_script.py`: my suggested version (run it with `nifty_daily.csv` in the same folder)
 - `compare_fixes.py`: applies the fixes one at a time and prints the table above
-- `nifty_daily.csv`: Nifty 50 daily bars 2012-2021 from Yahoo Finance (research period only)
+- `nifty_daily.csv`: Nifty 50 daily bars 2012-2021 from Yahoo Finance (ticker `^NSEI`, downloaded with `yfinance` on 3 Nov 2026; a copy of `part_c/data/research/nifty50_research.csv` with lower-case column names; research period only). All data sources are listed in the top-level `README.md`.

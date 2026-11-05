@@ -1,6 +1,6 @@
 # Overnight gap momentum in Nifty 50: it worked in 2012-2021 and mostly did not hold in 2022-2025
 
-Rishabh Vishwakarma. Technical assessment, Part C. Data: Nifty 50 and Bank Nifty daily bars, Yahoo Finance, Jan 2012 to Dec 2025.
+Rishabh Vishwakarma. Technical assessment, Part C. Data: Nifty 50 and Bank Nifty daily bars from Yahoo Finance (tickers ^NSEI and ^NSEBANK, downloaded on 3 Nov 2026), Jan 2012 to Dec 2025, checked against NSE's own files. All sources are listed in `part_c/README.md`.
 
 ## 1. Bottom line
 

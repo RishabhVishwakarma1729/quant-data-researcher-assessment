@@ -1,6 +1,8 @@
 # corrected_script.py
 # a revised version of the original script, with my suggested changes (the reasons are explained in issues.md)
 # needs nifty_daily.csv with date, open, high, low, close, volume. i ran it on the 2012-2021 research data only
+# source of that file: nifty 50 (yahoo ticker ^NSEI) daily bars from yahoo finance, downloaded with the yfinance package on 3 nov 2026,
+# a copy of part_c/data/research/nifty50_research.csv with lower-case column names (all data sources are listed in the top-level README.md)
 
 import numpy as np                                      # maths
 import pandas as pd                                     # tables
