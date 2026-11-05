@@ -1,13 +1,15 @@
 # 02d_build_nse_volume_reference.py
 # builds data/reference/nse_volume_2012_2021.csv: traded volume (shares) and turnover (Rs crore) of Nifty 50 and Bank Nifty as published by NSE itself
 # Yahoo's volume is empty or zero on many days (all of 2012 for Nifty), but NSE's own daily index files carry the number for every day they exist
-# this script only reads the files that 02c_build_nse_index_reference.py already saved in data/reference/sources, it downloads nothing
+# this script only reads the files that 02c_build_nse_index_reference.py saved in data/reference/sources, it downloads nothing
+# (the repository does not include those raw files, so run 02c first if you want to rebuild; the csv files are already included)
 #   python 02d_build_nse_volume_reference.py            -> research period 2012-2021 (used by 02_clean_data.py, section 3)
 #   python 02d_build_nse_volume_reference.py --locked   -> 2022-2025, ONLY for the post-hoc check after the single out-of-sample run
 #                                                          (used by 07_post_hoc_locked_check.py, it is not part of the research)
 # it never opens the locked price files, volume of the locked period comes from NSE's public files only
 
 import os                                               # paths
+import sys                                              # to stop with a message
 import csv                                              # reading and writing csv
 import argparse                                         # command line option
 import datetime as dt                                   # dates
@@ -24,6 +26,9 @@ if args.locked:
 else:
     FOLDER, OUT_NAME = "nse_index_files", "nse_volume_2012_2021.csv"
 RAW = os.path.join(REF, "sources", FOLDER)              # the saved daily files
+if not os.path.isdir(RAW):
+    sys.exit("%s not found: the raw NSE daily files are not part of this repository. Run 02c_build_nse_index_reference.py%s first, it downloads them." % (
+        RAW, " --locked" if args.locked else ""))
 
 NIFTY = {"S&P CNX Nifty", "CNX Nifty", "Nifty 50"}      # NSE renamed the index twice in this period
 BANK = {"CNX Bank", "Nifty Bank"}                       # and the bank index once

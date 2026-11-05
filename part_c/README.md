@@ -15,9 +15,9 @@ code/
   strategy.py                the trading rule (hashed at the freeze)
   01_download_data.py        downloads research and locked periods into separate folders
   02_clean_data.py           step 1: data quality report (includes the checks against NSE's holiday lists and NSE's own index files)
-  02b_build_nse_holidays.py  rebuilds data/reference/nse_trading_holidays_2012_2021.csv from the saved official sources (--locked: the 2022-2025 list)
-  02c_build_nse_index_reference.py  rebuilds data/reference/nse_index_ohlc_2012_2021.csv from NSE's daily index files, downloading only what is missing (--locked: 2022-2025)
-  02d_build_nse_volume_reference.py  rebuilds data/reference/nse_volume_2012_2021.csv (volume and turnover of both indices as published by NSE) from the saved daily files, downloading nothing (--locked: 2022-2025)
+  02b_build_nse_holidays.py  shows how data/reference/nse_trading_holidays_2012_2021.csv was built from NSE's circulars (--locked: the 2022-2025 list); the circulars are not in the repository
+  02c_build_nse_index_reference.py  rebuilds data/reference/nse_index_ohlc_2012_2021.csv from NSE's daily index files; it downloads them from NSE because the repository does not include them (--locked: 2022-2025)
+  02d_build_nse_volume_reference.py  rebuilds data/reference/nse_volume_2012_2021.csv (volume and turnover of both indices as published by NSE) from the daily files that 02c downloaded (--locked: 2022-2025)
   03_anomaly_scan.py         step 2: 98 tests, multiple-testing adjustment (--nse-filled: side check on research data plus NSE's bars for the days Yahoo lacks)
   03b_gap_diagnostics.py     robustness checks on the gap effect
   test_engine.py             no-look-ahead and cost-accounting tests
@@ -34,8 +34,8 @@ data/
                              nse_index_ohlc_2012_2021.csv (open/high/low/close of both indices as published by NSE, 2012-02-21 to 2021-12-31)
                              nse_volume_2012_2021.csv (volume in shares and turnover in Rs crore as published by NSE, 2012-02-21 to 2021-12-31; Yahoo's volume is empty or zero on many days)
                              nse_trading_holidays_2022_2025.csv, nse_index_ohlc_2022_2025.csv and nse_volume_2022_2025.csv: the same three files for the locked period (post-hoc check only)
-                             sources/ = the NSE circulars (pdf), archived NSE web pages and broker copies the holiday lists were built from,
-                             and nse_index_files/ (2012-2021) and nse_index_files_2022_2025/ = NSE's daily index files (one per trading day) behind the price csv files
+                             The raw files these were built from (NSE's circulars, archived NSE pages, broker copies and about 3,400 daily index files) are not in the repository;
+                             the holiday csv names its source on every row, and 02c downloads the daily files again.
   download_log.txt
 outputs/
   pdf/                       the seven reports as PDF (data quality, strategy research, out-of-sample results, gap diagnostics, mechanism checks,

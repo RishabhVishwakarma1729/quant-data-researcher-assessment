@@ -1,7 +1,8 @@
 # 02c_build_nse_index_reference.py
 # builds data/reference/nse_index_ohlc_2012_2021.csv: open, high, low, close of Nifty 50 and Bank Nifty as published by NSE itself
 # NSE puts one file per trading day on its archive site (ind_close_all_DDMMYYYY.csv, all indices in one file)
-# files that are already saved in data/reference/sources/nse_index_files are not downloaded again, so this runs offline too
+# files that are already saved in data/reference/sources/nse_index_files are not downloaded again, so this runs offline too.
+# the repository does not include those raw files, so a fresh run downloads them first (about 2,400 files for 2012-2021, one request at a time, a few minutes)
 #   python 02c_build_nse_index_reference.py            -> research period 2012-2021 (used by 02_clean_data.py, section 7)
 #   python 02c_build_nse_index_reference.py --locked   -> 2022-2025, ONLY for the post-hoc check after the single out-of-sample run
 #                                                         (used by 07_post_hoc_locked_check.py, it is not part of the research)

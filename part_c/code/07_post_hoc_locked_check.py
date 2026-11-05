@@ -6,8 +6,7 @@
 #   3. compares the volume column with NSE's own volume (data/reference/nse_volume_2022_2025.csv), volume only
 # it changes no rule, no parameter and no result of the study, and it does not rerun the out-of-sample test.
 # the only calculation that touches the rule is a labelled sensitivity run (frozen rule on Yahoo data vs. Yahoo data plus the days NSE has and Yahoo lacks)
-# before this script runs: python 02b_build_nse_holidays.py --locked, python 02c_build_nse_index_reference.py --locked
-# and python 02d_build_nse_volume_reference.py --locked
+# it reads the reference csv files already in data/reference (built earlier by 02b, 02c and 02d with --locked, see those scripts)
 
 import os                                               # paths and env variable
 import sys                                              # to quit with a message
@@ -75,7 +74,7 @@ summary_at = len(lines)                                 # the summary is written
 say("## 1. Dates against NSE's official holiday lists")
 say("")
 say("data/reference/nse_trading_holidays_2022_2025.csv has every weekday trading holiday of 2022-2025 from NSE's four yearly circulars "
-    "(NSE/CMTR/50560, 54757, 59722 and 65587, saved in data/reference/sources/), plus the changes NSE announced later: the Bakri Id holiday of 2023 moved from 28 to 29 June, "
+    "(NSE/CMTR/50560, 54757, 59722 and 65587; the circular pdfs themselves are not part of the repository), plus the changes NSE announced later: the Bakri Id holiday of 2023 moved from 28 to 29 June, "
     "and extra closures on 22-Jan-2024 (Ram Mandir consecration), 20-May-2024 (parliamentary elections in Mumbai) and 20-Nov-2024 (assembly elections in Maharashtra). "
     "The Bakri Id move and 22-Jan-2024 turned up because the Yahoo data and NSE's own files disagreed with the yearly circulars; I looked up the two election closures beforehand. "
     "All four are confirmed in press reports that quote NSE's circulars, and NSE has no index file for any of those closed days.")
@@ -116,7 +115,7 @@ say("")
 say("## 2. Prices against NSE's own index files")
 say("")
 say("data/reference/nse_index_ohlc_2022_2025.csv has the Nifty 50 and Bank Nifty rows of NSE's daily index files (built by 02c_build_nse_index_reference.py --locked, "
-    "the saved files are in data/reference/sources/nse_index_files_2022_2025/). NSE has files from %s to %s." % (nse_start.date(), nse_end.date()))
+    "from NSE's daily files, which are not part of the repository). NSE has files from %s to %s." % (nse_start.date(), nse_end.date()))
 say("")
 cmp_rows, mism = [], []
 for lab, yahoo in [("Nifty 50", nifty), ("Bank Nifty", bank)]:

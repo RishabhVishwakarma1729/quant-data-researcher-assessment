@@ -26,16 +26,16 @@ Python 3.12, `pip install -r requirements.txt`. From `part_c/code/`:
 ```
 python 01_download_data.py       # only needed to re-download; the csv files are already included
 python 02_clean_data.py          # step 1, data quality report (checks the dates against NSE's holiday lists and the prices against NSE's own index files)
-python 02b_build_nse_holidays.py # optional: rebuilds the NSE holiday reference file from data/reference/sources
-python 02c_build_nse_index_reference.py   # optional: rebuilds the NSE index price reference file (uses the saved daily files, downloads only missing ones)
-python 02d_build_nse_volume_reference.py  # optional: rebuilds the NSE volume reference file from the same saved daily files (downloads nothing)
+python 02b_build_nse_holidays.py # optional, shows how the NSE holiday csv was built (needs NSE's circulars, which are not in the repository)
+python 02c_build_nse_index_reference.py   # optional: rebuilds the NSE index price csv by downloading NSE's daily index files (a few minutes; the raw files are not in the repository)
+python 02d_build_nse_volume_reference.py  # optional: rebuilds the NSE volume csv from the daily files that 02c downloaded (run 02c first)
 python 03_anomaly_scan.py        # step 2, all 98 tests
 python 03b_gap_diagnostics.py    # checks on the one effect that survived
 python test_engine.py            # sanity tests for the backtester
 python 04_strategy_research.py   # steps 4-5 on the research period
 python 04b_mechanism_checks.py   # where does the edge come from
 python 03_anomaly_scan.py --nse-filled && python 04_strategy_research.py --nse-filled   # optional side check: scan, grid and reality check on research data plus NSE's own bars (writes only outputs/markdown/nse_filled_side_check.md)
-python 07_post_hoc_locked_check.py   # optional, post-hoc: checks the locked 2022-2025 data against NSE (needs 02b, 02c and 02d with --locked first; refuses to run before the out-of-sample run)
+python 07_post_hoc_locked_check.py   # optional, post-hoc: checks the locked 2022-2025 data against NSE (reads the reference csv files that are already in data/reference; refuses to run before the out-of-sample run)
 ```
 
 `05_freeze_rules.py` and `06_run_oos.py` are part of the record but are **not meant to be re-run**. The freeze script wrote `outputs/frozen_rules.json` and the out-of-sample script wrote `outputs/oos_run.lock`, after which it refuses to run again (it also checks hashes of the code and data). `outputs/pdf/oos_results.pdf` (markdown in `outputs/markdown/`) is the output of the one real run. The script itself is hash-locked, so it still writes that report into `outputs/` if it is ever run again; I moved the file afterwards. `python 06_run_oos.py --dry-run` runs the same code on research data if you want to see that it works.

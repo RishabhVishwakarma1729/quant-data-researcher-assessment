@@ -1,6 +1,8 @@
 # 02b_build_nse_holidays.py
 # builds data/reference/nse_trading_holidays_2012_2021.csv (every weekday trading holiday of NSE) from the saved sources
-# in data/reference/sources. it only reads those files, nothing is downloaded here. 02_clean_data.py uses the csv in its calendar check
+# in data/reference/sources (NSE circulars, archived NSE pages, broker copies). it only reads those files, nothing is downloaded here.
+# the repository does not include that folder: the csv is already there, so this script only shows how it was built.
+# 02_clean_data.py uses the csv in its calendar check
 # with --locked it builds nse_trading_holidays_2022_2025.csv instead (only for the post-hoc check, see 07_post_hoc_locked_check.py)
 
 import os                                               # paths
@@ -17,6 +19,8 @@ args = ap.parse_args()
 HERE = os.path.dirname(os.path.abspath(__file__))       # folder of this script
 REF = os.path.normpath(os.path.join(HERE, "..", "data", "reference"))   # reference folder
 SRC = os.path.join(REF, "sources")                      # the saved official documents
+if not os.path.isdir(SRC):
+    sys.exit("data/reference/sources is not part of this repository, so there is nothing to rebuild from. The holiday csv files are already included.")
 
 MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]   # first three letters of each month
 

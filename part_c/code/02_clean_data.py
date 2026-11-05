@@ -237,7 +237,7 @@ say("")
 say("## 7. Check against NSE's own index files")
 say("")
 say("NSE puts one file per trading day on its archive site with the open, high, low and close of all its indices (nsearchives.nseindia.com/content/indices/ind_close_all_DDMMYYYY.csv).")
-say("The file data/reference/nse_index_ohlc_2012_2021.csv has the Nifty 50 and Bank Nifty rows of those files (built by 02c_build_nse_index_reference.py, the saved files are in data/reference/sources/nse_index_files/).")
+say("The file data/reference/nse_index_ohlc_2012_2021.csv has the Nifty 50 and Bank Nifty rows of those files (built by 02c_build_nse_index_reference.py from NSE's daily files, which are not part of the repository).")
 say("Yahoo stays the data source of the study; this section is a check on it and not a replacement.")
 say("")
 off = pd.read_csv(os.path.join(DATA_DIR, "reference", "nse_index_ohlc_2012_2021.csv"), parse_dates=["date"])    # NSE's own numbers

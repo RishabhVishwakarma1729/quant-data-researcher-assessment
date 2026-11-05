@@ -2,7 +2,7 @@
 
 **Read this first.** This check was done after the single out-of-sample run, not before it. The run (3 Nov 2026) used the Yahoo files as downloaded. Afterwards I compared them with NSE's own holiday lists and index files, the same checks that sections 6 and 7 of the data quality report make for 2012-2021. Nothing in the study was changed because of this: no rule, no parameter, no cleaning step and no out-of-sample number. The out-of-sample test was not rerun. The one calculation that touches the rule (section 4) is a labelled sensitivity run, not a new test, and the verdict does not depend on it.
 
-Run at 2026-11-05 15:44:42.
+Run at 2026-11-05 16:30:26.
 
 ## Summary
 
@@ -14,7 +14,7 @@ Run at 2026-11-05 15:44:42.
 
 ## 1. Dates against NSE's official holiday lists
 
-data/reference/nse_trading_holidays_2022_2025.csv has every weekday trading holiday of 2022-2025 from NSE's four yearly circulars (NSE/CMTR/50560, 54757, 59722 and 65587, saved in data/reference/sources/), plus the changes NSE announced later: the Bakri Id holiday of 2023 moved from 28 to 29 June, and extra closures on 22-Jan-2024 (Ram Mandir consecration), 20-May-2024 (parliamentary elections in Mumbai) and 20-Nov-2024 (assembly elections in Maharashtra). The Bakri Id move and 22-Jan-2024 turned up because the Yahoo data and NSE's own files disagreed with the yearly circulars; I looked up the two election closures beforehand. All four are confirmed in press reports that quote NSE's circulars, and NSE has no index file for any of those closed days.
+data/reference/nse_trading_holidays_2022_2025.csv has every weekday trading holiday of 2022-2025 from NSE's four yearly circulars (NSE/CMTR/50560, 54757, 59722 and 65587; the circular pdfs themselves are not part of the repository), plus the changes NSE announced later: the Bakri Id holiday of 2023 moved from 28 to 29 June, and extra closures on 22-Jan-2024 (Ram Mandir consecration), 20-May-2024 (parliamentary elections in Mumbai) and 20-Nov-2024 (assembly elections in Maharashtra). The Bakri Id move and 22-Jan-2024 turned up because the Yahoo data and NSE's own files disagreed with the yearly circulars; I looked up the two election closures beforehand. All four are confirmed in press reports that quote NSE's circulars, and NSE has no index file for any of those closed days.
 
 | year   | official weekday holidays   | expected sessions   | nifty rows   | bank rows   | open days missing from Nifty   | open days missing from Bank Nifty   | rows on official holidays   |
 |:-------|:----------------------------|:--------------------|:-------------|:------------|:-------------------------------|:------------------------------------|:----------------------------|
@@ -33,7 +33,7 @@ Of the 56 weekdays missing from both series, 56 are official holidays and 0 are 
 
 ## 2. Prices against NSE's own index files
 
-data/reference/nse_index_ohlc_2022_2025.csv has the Nifty 50 and Bank Nifty rows of NSE's daily index files (built by 02c_build_nse_index_reference.py --locked, the saved files are in data/reference/sources/nse_index_files_2022_2025/). NSE has files from 2022-01-03 to 2025-12-31.
+data/reference/nse_index_ohlc_2022_2025.csv has the Nifty 50 and Bank Nifty rows of NSE's daily index files (built by 02c_build_nse_index_reference.py --locked, from NSE's daily files, which are not part of the repository). NSE has files from 2022-01-03 to 2025-12-31.
 
 | index      | Yahoo bars   | compared with NSE   | open identical   | high identical   | low identical   | close identical   |
 |:-----------|:-------------|:--------------------|:-----------------|:-----------------|:----------------|:------------------|

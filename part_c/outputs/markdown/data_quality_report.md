@@ -169,7 +169,7 @@ Also worth noting:
 ## 7. Check against NSE's own index files
 
 NSE puts one file per trading day on its archive site with the open, high, low and close of all its indices (nsearchives.nseindia.com/content/indices/ind_close_all_DDMMYYYY.csv).
-The file data/reference/nse_index_ohlc_2012_2021.csv has the Nifty 50 and Bank Nifty rows of those files (built by 02c_build_nse_index_reference.py, the saved files are in data/reference/sources/nse_index_files/).
+The file data/reference/nse_index_ohlc_2012_2021.csv has the Nifty 50 and Bank Nifty rows of those files (built by 02c_build_nse_index_reference.py from NSE's daily files, which are not part of the repository).
 Yahoo stays the data source of the study; this section is a check on it and not a replacement.
 
 | index      |   Yahoo bars |   compared with NSE |   open identical |   high identical |   low identical |   close identical |
