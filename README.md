@@ -4,6 +4,14 @@ Rishabh Vishwakarma
 
 Thank you for reviewing my submission. A short guide to the folders follows.
 
+## The 30-second version
+
+- **The rule:** when the market opens far from the previous close (a gap of at least half its usual size), go long after a gap up and short after a gap down. Enter at the next open, hold two days, pay 0.05% per side.
+- **What survived:** I tested 98 ideas on 2012-2021 (classical tests and ML) and corrected for the number of tries. Only one tradable effect survived, this overnight gap (Nifty and Bank Nifty). The rest was noise or could not be traded at the next open.
+- **Out of sample (2022-2025, locked):** the effect was gone (t = -0.04 on Nifty). The rule's Sharpe was 0.82 against 0.78 for buy and hold, and -0.17 on Bank Nifty. The run could not trade before 4 April 2022 (see Notes below).
+- **Verdict:** I would not trade it with real money. My confidence in a real, tradable edge is about 20%.
+- **Where to read:** `part_c/pdf/research_note.pdf` (5 pages) says all of this with the numbers. Everything else in the repository is evidence for it.
+
 ## What is in here
 
 | Part | Where | What |
