@@ -2,12 +2,13 @@
 
 **Read this first.** This check was done after the single out-of-sample run, not before it. The run (3 Nov 2026) used the Yahoo files as downloaded. Afterwards I compared them with NSE's own holiday lists and index files, the same checks that sections 6 and 7 of the data quality report make for 2012-2021. Nothing in the study was changed because of this: no rule, no parameter, no cleaning step and no out-of-sample number. The out-of-sample test was not rerun. The one calculation that touches the rule (section 4) is a labelled sensitivity run, not a new test, and the verdict does not depend on it.
 
-Run at 2026-11-04 19:06:43.
+Run at 2026-11-05 15:44:42.
 
 ## Summary
 
 - **Dates:** 56 of the 56 weekdays missing from both Yahoo series are official holidays, and 0 are real trading days. Yahoo has a bar for every real weekday session NSE had (0 missing from Nifty, 0 from Bank Nifty).
 - **Prices:** the Nifty open and close are identical to NSE's on all 988 compared bars, and Bank Nifty's on 987 of 987. 3 highs or lows differ, by at most 7.65 points, and none of them is an open or a close.
+- **Volume:** Yahoo's zero volume (8 Nifty and 6 Bank Nifty days) is missing data, and NSE has the volume for 8 and 6 of those days. The study does not use volume.
 - **Effect on the result:** nothing to put back, so the out-of-sample result stands exactly as submitted (net Sharpe 0.82, 263 trades).
 - **What I found on the way:** four calendar changes that the yearly NSE circulars do not show (Bakri Id 2023 moved a day, extra closures on 22-Jan-2024, 20-May-2024 and 20-Nov-2024), and three NSE files with the date written month-first. Both are handled and described below.
 
@@ -69,4 +70,8 @@ Days NSE has and Yahoo lacks (real weekday sessions, Muhurat evenings left out):
 
 The first row reproduces the submitted out-of-sample result (net Sharpe 0.82, 263 trades, 983 days), which shows that this script uses the same data and code as the run.
 There is nothing to put back: Yahoo has a bar for every real weekday session that NSE has, in both indices. So, unlike the research period (where 14 days were missing), there is no second row to compute.
+
+## 5. Volume
+
+Same check as section 3 of the data quality report, on the volume column only (no prices). NSE's file nse_volume_2022_2025.csv (built by 02d_build_nse_volume_reference.py --locked) has a volume for all 992 sessions, with 0 blank and 0 zero values. Yahoo shows zero volume on 8 Nifty and 6 Bank Nifty days, and NSE has the volume for 8 and 6 of them. Yahoo's non-zero volume is in thousands of shares, as in the research period: within 5% of NSE's number divided by 1,000 on 98.6% of the Nifty days and 99.6% of the Bank Nifty days. Bank Nifty is written in raw shares on 2 days (2023-01-02, 2024-04-01), and 7 Nifty and 3 Bank Nifty days are more than 10% off. The study is price-only, so volume changes no result.
 

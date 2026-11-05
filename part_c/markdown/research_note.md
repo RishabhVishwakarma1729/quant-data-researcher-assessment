@@ -37,7 +37,7 @@ Rishabh Vishwakarma. Technical assessment, Part C. Data: Nifty 50 and Bank Nifty
 - **Missing days:** Bank Nifty has 12 dates that Nifty lacks, and six of them are 1 January, when NSE trades. I checked all 12 against NSE's official holiday lists and none is a holiday, so they are real trading days missing from Yahoo's Nifty series. The same check found 3 more real trading days missing from both series (26 Oct 2012, 13 Feb 2019, 29 Mar 2019). NSE's own files have 14 of these 15 days. Putting them back moves the research Sharpe only from 1.25 to 1.23, and the scan and the choice of rule come out the same (`outputs/pdf/nse_filled_side_check.pdf`). I still kept only dates present in both series, so that research and out-of-sample come from one source.
 - **Bad print:** Bank Nifty on 10 Nov 2016 is a frozen bar (O=H=L=C, volume 0), and I dropped it.
 - **Special sessions:** I dropped three one-hour Diwali Muhurat sessions. The Saturday budget sessions (2015, 2020) are missing from the data, so their moves sit inside the next Monday.
-- **Volume:** it is empty for Nifty in 2012 and zero on 1,415 of 2,461 Bank Nifty days, so I do not use volume anywhere.
+- **Volume:** Yahoo's is empty for Nifty in 2012 and zero on 1,415 of 2,461 Bank Nifty days. NSE's own files have it from 21 Feb 2012, but I do not use volume anywhere.
 - **Outliers:** 29 days had a move above 5% in either index (for example Aug 2015, Mar-May 2020, budget and tax-cut days). Both indices moved the same way on each day, so I kept them, as removing them would hide the tail risk.
 - The final tables have 2,445 research days and 984 locked days, cleaned with the same function.
 

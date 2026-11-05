@@ -31,7 +31,7 @@ def say(text=""):
 say("# Data quality report (research period 2012-2021)")
 say("")
 say("Source: Yahoo Finance (tickers ^NSEI and ^NSEBANK) through the yfinance package. Raw, unadjusted daily bars.")
-say("Indices have no splits or dividends so no adjustment is needed. Section 6 checks the dates against NSE's holiday lists and section 7 checks the prices against NSE's own index files.")
+say("Indices have no splits or dividends so no adjustment is needed. Section 3 compares the volume with NSE's own numbers, section 6 checks the dates against NSE's holiday lists and section 7 checks the prices against NSE's own index files.")
 say("")
 
 # ---------------------------------------------------------------- 1. rows per year vs weekdays
@@ -78,8 +78,49 @@ vol = pd.DataFrame({
 })
 say(vol.to_markdown())
 say("")
-say("Nifty volume is empty for the whole of 2012. Bank Nifty volume is zero on 1415 of 2461 days and the non-zero numbers")
-say("in 2012 (like 11,200) look unreliable. **I decided not to use volume anywhere in the study.** Price-only.")
+
+# NSE's own volume for the same days (02d_build_nse_volume_reference.py reads the daily files saved for section 7)
+nvol = pd.read_csv(os.path.join(DATA_DIR, "reference", "nse_volume_2012_2021.csv"), parse_dates=["date"])
+nvol_by = {lab: nvol[nvol["index"] == lab].set_index("date")["volume_shares"].dropna() for lab in ["Nifty 50", "Bank Nifty"]}
+nse_vol_start = nvol["date"].min()                                      # NSE's files start here
+zero_rows, no_source, unit_stats, odd_units = [], {}, {}, {}
+for lab, yahoo in [("Nifty 50", nifty), ("Bank Nifty", bank)]:
+    zero = yahoo.index[yahoo["Volume"] == 0]                            # days where Yahoo shows no volume
+    can_fill = zero.intersection(nvol_by[lab].index)                    # NSE has a number for these
+    no_source[lab] = zero.difference(nvol_by[lab].index)                # neither source has one
+    zero_rows.append({"index": lab, "days with zero volume in Yahoo": len(zero), "NSE has the volume for": len(can_fill), "no volume from either": len(no_source[lab])})
+    both = yahoo.index[yahoo["Volume"] > 0].intersection(nvol_by[lab].index)         # days where both sources have a number
+    ratio = yahoo.loc[both, "Volume"] / (nvol_by[lab].loc[both] / 1000.0)           # Yahoo divided by NSE in thousands of shares
+    odd_units[lab] = ratio.index[ratio > 100]                           # Yahoo wrote raw shares instead of thousands on these days
+    ratio = ratio.drop(odd_units[lab]) - 1                              # relative difference, 0.03 = Yahoo is 3% above NSE
+    low_years = [int(y) for y, m in ratio.groupby(ratio.index.year).median().items() if m < -0.02]     # years where Yahoo sits clearly below NSE
+    unit_stats[lab] = {"first": both[0], "within5": (ratio.abs() <= 0.05).mean(), "off10": int((ratio.abs() > 0.10).sum()),
+                       "low_years": low_years, "low_gap": -ratio[ratio.index.year.isin(low_years)].median() if low_years else 0.0}
+say("**NSE has the volume that Yahoo lacks.** NSE's index files carry the volume too (data/reference/nse_volume_2012_2021.csv, built by 02d_build_nse_volume_reference.py). "
+    "From %s on it has a number for every day, with no blank and no zero. Yahoo's zero volume is therefore missing data and not a day without trading, and NSE can fill most of it:" % nse_vol_start.date())
+say("")
+say(pd.DataFrame(zero_rows).to_markdown(index=False))
+say("")
+early_vol = [d for d in no_source["Nifty 50"] if d < nse_vol_start]                          # the stretch before NSE's files begin
+late_vol = sorted(set(no_source["Nifty 50"]).union(no_source["Bank Nifty"]) - set(early_vol))   # days NSE's archive lacks
+say("The days without a volume from either source are the %d trading days from %s to %s, before NSE's files begin%s." % (
+    len(early_vol), early_vol[0].date(), early_vol[-1].date(),
+    (", and %d later Bank Nifty days that NSE's archive lacks (%s)" % (len(late_vol), ", ".join(str(d.date()) for d in late_vol))) if late_vol else ""))
+say("")
+n_st, b_st = unit_stats["Nifty 50"], unit_stats["Bank Nifty"]
+n_day = n_st["first"]                                                   # first day on which Nifty has a number in both sources
+b_day = bank.index[(bank["Volume"] > 0) & (bank.index.year == 2012)].intersection(nvol_by["Bank Nifty"].index)[0]      # a small 2012 Bank Nifty number we can check
+yrs = [str(y) for y in n_st["low_years"]]
+yrs_text = (", ".join(yrs[:-1]) + " and " + yrs[-1]) if len(yrs) > 1 else "".join(yrs)           # "2015, 2016 and 2017"
+low_text = "Nifty runs about %.0f%% below NSE in %s" % (100 * n_st["low_gap"], yrs_text) if yrs else "Nifty has no clear gap"
+raw_days = ", ".join(str(d.date()) for d in odd_units["Bank Nifty"])    # days Yahoo wrote raw shares instead of thousands
+say(f"**What Yahoo's non-zero volume is.** It is in thousands of shares, not shares: on {n_day.date()} Yahoo has {nifty.loc[n_day, 'Volume']:,.0f} for Nifty "
+    f"and NSE has {nvol_by['Nifty 50'].loc[n_day]:,.0f}. Against NSE's number divided by 1,000, Yahoo is within 5% on {100 * n_st['within5']:.1f}% of the Nifty days "
+    f"and {100 * b_st['within5']:.1f}% of the Bank Nifty days. It is not clean, though: {low_text}; Bank Nifty is written in raw shares on "
+    f"{len(odd_units['Bank Nifty'])} days ({raw_days}); and {n_st['off10']} Nifty and {b_st['off10']} Bank Nifty days are more than 10% off. "
+    f"So the small non-zero numbers in 2012 are real and not unreliable (Bank Nifty on {b_day.date()}: Yahoo {bank.loc[b_day, 'Volume']:,.0f}, NSE {nvol_by['Bank Nifty'].loc[b_day]:,.0f} shares).")
+say("")
+say("**I decided not to use volume anywhere in the study.** Price-only, so none of this changes a result. If volume were ever needed, NSE's file is the better source.")
 say("")
 
 # ---------------------------------------------------------------- 4. run the cleaning rules

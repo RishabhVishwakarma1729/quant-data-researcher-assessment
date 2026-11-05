@@ -3,9 +3,11 @@
 # it does for the locked Yahoo files what 02_clean_data.py (sections 6 and 7) did for the research files:
 #   1. compares the dates with NSE's official holiday lists (data/reference/nse_trading_holidays_2022_2025.csv)
 #   2. compares the prices with NSE's own daily index files (data/reference/nse_index_ohlc_2022_2025.csv)
+#   3. compares the volume column with NSE's own volume (data/reference/nse_volume_2022_2025.csv), volume only
 # it changes no rule, no parameter and no result of the study, and it does not rerun the out-of-sample test.
 # the only calculation that touches the rule is a labelled sensitivity run (frozen rule on Yahoo data vs. Yahoo data plus the days NSE has and Yahoo lacks)
-# before this script runs: python 02b_build_nse_holidays.py --locked   and   python 02c_build_nse_index_reference.py --locked
+# before this script runs: python 02b_build_nse_holidays.py --locked, python 02c_build_nse_index_reference.py --locked
+# and python 02d_build_nse_volume_reference.py --locked
 
 import os                                               # paths and env variable
 import sys                                              # to quit with a message
@@ -225,6 +227,30 @@ if not (len(fill_n) or len(fill_b)):
         "So, unlike the research period (where 14 days were missing), there is no second row to compute.")
 say("")
 
+# ---------------------------------------------------------------- 5. volume
+say("## 5. Volume")
+say("")
+nvol = pd.read_csv(os.path.join(DATA_DIR, "reference", "nse_volume_2022_2025.csv"), parse_dates=["date"])      # built by 02d_build_nse_volume_reference.py --locked
+nvol_by = {lab: nvol[nvol["index"] == lab].set_index("date")["volume_shares"].dropna() for lab in ["Nifty 50", "Bank Nifty"]}
+vol_stats = {}
+for lab, yahoo in [("Nifty 50", nifty), ("Bank Nifty", bank)]:
+    zero = yahoo.index[yahoo["Volume"] == 0]                            # days where Yahoo shows no volume
+    both = yahoo.index[yahoo["Volume"] > 0].intersection(nvol_by[lab].index)         # days where both sources have a number
+    ratio = yahoo.loc[both, "Volume"] / (nvol_by[lab].loc[both] / 1000.0)           # Yahoo divided by NSE in thousands of shares
+    raw_days = ratio.index[ratio > 100]                                 # Yahoo wrote raw shares instead of thousands on these days
+    rel = ratio.drop(raw_days) - 1                                      # relative difference, 0.03 = Yahoo is 3% above NSE
+    vol_stats[lab] = {"zero": len(zero), "filled": len(zero.intersection(nvol_by[lab].index)), "within5": (rel.abs() <= 0.05).mean(),
+                      "off10": int((rel.abs() > 0.10).sum()), "raw_days": raw_days}
+vn, vb = vol_stats["Nifty 50"], vol_stats["Bank Nifty"]
+raw_text = (", ".join(str(d.date()) for d in vb["raw_days"])) or "none"
+say("Same check as section 3 of the data quality report, on the volume column only (no prices). NSE's file nse_volume_2022_2025.csv (built by 02d_build_nse_volume_reference.py --locked) "
+    "has a volume for all %d sessions, with %d blank and %d zero values. Yahoo shows zero volume on %d Nifty and %d Bank Nifty days, and NSE has the volume for %d and %d of them. "
+    "Yahoo's non-zero volume is in thousands of shares, as in the research period: within 5%% of NSE's number divided by 1,000 on %.1f%% of the Nifty days and %.1f%% of the Bank Nifty days. "
+    "Bank Nifty is written in raw shares on %d days (%s), and %d Nifty and %d Bank Nifty days are more than 10%% off. The study is price-only, so volume changes no result." % (
+        nvol["date"].nunique(), int(nvol["volume_shares"].isna().sum()), int((nvol["volume_shares"] == 0).sum()), vn["zero"], vb["zero"], vn["filled"], vb["filled"],
+        100 * vn["within5"], 100 * vb["within5"], len(vb["raw_days"]), raw_text, vn["off10"], vb["off10"]))
+say("")
+
 # ---------------------------------------------------------------- summary at the top
 summary = ["## Summary", "",
            "- **Dates:** %d of the %d weekdays missing from both Yahoo series are official holidays, and %d are real trading days. Yahoo has a bar for every real weekday session NSE had (%d missing from Nifty, %d from Bank Nifty)." % (
@@ -232,6 +258,8 @@ summary = ["## Summary", "",
            "- **Prices:** the Nifty open and close are identical to NSE's on all %d compared bars, and Bank Nifty's on %d of %d. %d highs or lows differ, by at most %.2f points, and none of them is an open or a close." % (
                cmp_rows[0]["compared with NSE"], min(cmp_rows[1]["open identical"], cmp_rows[1]["close identical"]), cmp_rows[1]["compared with NSE"],
                len(mism), max([abs(m[3] - m[4]) for m in mism] or [0.0])),
+           "- **Volume:** Yahoo's zero volume (%d Nifty and %d Bank Nifty days) is missing data, and NSE has the volume for %d and %d of those days. The study does not use volume." % (
+               vn["zero"], vb["zero"], vn["filled"], vb["filled"]),
            "- **Effect on the result:** nothing to put back, so the out-of-sample result stands exactly as submitted (net Sharpe %.2f, %d trades)." % (s0["Sharpe"], int(s0["Trades"])),
            "- **What I found on the way:** four calendar changes that the yearly NSE circulars do not show (Bakri Id 2023 moved a day, extra closures on 22-Jan-2024, 20-May-2024 and 20-Nov-2024), "
            "and three NSE files with the date written month-first. Both are handled and described below.",

@@ -4,16 +4,18 @@
 
 **By chance**
 
-- If "above 2" is one-sided, a rule with no real edge passes about 2.3% of the time, so out of 200 rules I would expect 4 or 5 to pass by luck (about 9 if |t| above 2 is counted).
-- Eight passes is roughly what chance would give, so I would assume that probably none of them is real.
+- Imagine 200 people tossing a coin 10 times. A few will get 9 heads by chance.
+- Trading rules with no real edge are similar. Their t values follow a bell curve, and about 95.5% land between -2 and +2.
+- So 4.5% land outside, and half of that, about 2.3%, is above t = 2.
+- Then 200 x 0.023 = 4.6, so about 4 or 5 passes (about 9 if negative t counts too).
+- We got 8, close to what chance gives. So it is likely that none is real.
 
 **How I would decide**
 
-- I would not rely on t = 2 as the bar. The Bonferroni bar is about t = 3.5 (5% / 200), or the false discovery rate can be controlled with Benjamini-Hochberg.
-- The best of 200 rules with no edge usually reaches t of about 2.7, a Sharpe near 0.85 over 10 years, so a good-looking Sharpe can come from luck alone.
-- I would use a test that counts all 200 tries (White's reality check or the deflated Sharpe) and keep a period that nobody has looked at.
-- I would also check the sign in both halves of the sample and ask for an economic reason why the rule works.
-- A rule without such a reason would get a small size, if any.
+- Raise the bar: 200 tries almost guarantee some winners by chance. Split the 5% across 200: 0.05 / 200 = 0.00025, which needs about t = 3.5, not 2.
+- Luck alone can push the best rule to t = 2.7. Over 10 years, that is 2.7 / sqrt(10) = 0.85 return-for-risk, which looks good but is chance.
+- Test the best rules once on fresh, untouched data, as the old data already holds their luck.
+- Keep a rule only if it works in both halves of the data and makes sense, as luck rarely repeats. If not, use a small size, or none.
 
 > **2.** A classifier predicting next-day Nifty direction reaches 54% accuracy out of sample. Is this good or bad? What else do you need to know before deciding whether it is tradeable?
 

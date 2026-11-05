@@ -61,15 +61,15 @@ m = RandomForestClassifier(n_estimators=500, random_state=0).fit(Xtr, ytr)
 sig = pd.Series(m.predict(Xte) * 2 - 1, index=Xte.index)
 add("1", "+ remove 'ret' from the features (target is still today's return)", sharpe(sig * d.loc[Xte.index, "ret"]), (m.predict(Xte) == yte).mean())
 
-# ---------------------------------------------------------------- step 2: predict TOMORROW, earn tomorrow
+# ---------------------------------------------------------------- step 2: predict TOMORROW, score on tomorrow's return
 df["target"] = (df["ret"].shift(-1) > 0).astype(int)    # tomorrow's direction
-df["next_ret"] = df["ret"].shift(-1)                    # what a position taken at today's close earns tomorrow
+df["next_ret"] = df["ret"].shift(-1)                    # the profit or loss of a position taken at today's close is tomorrow's return
 d = df.dropna(subset=["dist_ma", "vol_20", "z_volume", "ret", "ret_lag1", "next_ret"])
 f2 = ["dist_ma", "vol_20", "z_volume", "ret"]
 Xtr, Xte, ytr, yte = train_test_split(d[f2], d["target"], test_size=0.3, random_state=42)
 m = RandomForestClassifier(n_estimators=500, random_state=0).fit(Xtr, ytr)
 sig = pd.Series(m.predict(Xte) * 2 - 1, index=Xte.index)
-add("2", "+ target is tomorrow's direction, position earns tomorrow's return (random split still on)",
+add("2", "+ predict tomorrow's direction and score the trade on tomorrow's return (random split still on)",
     sharpe(sig * d.loc[Xte.index, "next_ret"]), (m.predict(Xte) == yte).mean())
 
 # ---------------------------------------------------------------- step 3: split by time instead of shuffling

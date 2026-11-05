@@ -8,7 +8,7 @@
 |---|---|---|---|
 | 0 | original script | 13.70 | 1.000 |
 | 1 | take `ret` out of the features | 2.85 | 0.612 |
-| 2 | predict tomorrow and earn tomorrow (random split still on) | 0.55 | 0.525 |
+| 2 | predict tomorrow's direction and score the trade on tomorrow's return (random split still on) | 0.55 | 0.525 |
 | 3 | split by time instead of shuffling | 1.01 | 0.538 |
 | 4 | volume z-score from the past only | 0.56 | 0.535 |
 | 5a | trade at next open | 0.72 | 0.530 |
@@ -46,7 +46,7 @@
 **5. The volume z-score uses the whole sample**
 
 - `df["volume"].mean()` and `.std()` include the test period, so each row is standardised with information from the future. Volume also trends upward, so the feature can act as a proxy for the calendar.
-- Volume is zero throughout 2012, which is missing data in Yahoo and not "no trading".
+- Volume is zero throughout 2012, which is missing data in Yahoo and not "no trading". NSE's own daily index files have the volume from 21 February 2012 (`part_c/data/reference/nse_volume_2012_2021.csv`).
 - *Suggested fix:* treat zeros as missing and use the mean and standard deviation of the past 60 days only.
 
 **6. Costs are not included**

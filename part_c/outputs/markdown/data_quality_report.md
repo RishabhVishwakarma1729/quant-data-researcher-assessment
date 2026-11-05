@@ -1,7 +1,7 @@
 # Data quality report (research period 2012-2021)
 
 Source: Yahoo Finance (tickers ^NSEI and ^NSEBANK) through the yfinance package. Raw, unadjusted daily bars.
-Indices have no splits or dividends so no adjustment is needed. Section 6 checks the dates against NSE's holiday lists and section 7 checks the prices against NSE's own index files.
+Indices have no splits or dividends so no adjustment is needed. Section 3 compares the volume with NSE's own numbers, section 6 checks the dates against NSE's holiday lists and section 7 checks the prices against NSE's own index files.
 
 ## 1. How many days do we have
 |      |   weekdays |   nifty_rows |   bank_rows |   weekdays_missing_in_both |
@@ -57,8 +57,18 @@ What I did: keep only dates present in both series. The cost is that the first r
 |   2020 |                        2 |                      98 |
 |   2021 |                        4 |                     136 |
 
-Nifty volume is empty for the whole of 2012. Bank Nifty volume is zero on 1415 of 2461 days and the non-zero numbers
-in 2012 (like 11,200) look unreliable. **I decided not to use volume anywhere in the study.** Price-only.
+**NSE has the volume that Yahoo lacks.** NSE's index files carry the volume too (data/reference/nse_volume_2012_2021.csv, built by 02d_build_nse_volume_reference.py). From 2012-02-21 on it has a number for every day, with no blank and no zero. Yahoo's zero volume is therefore missing data and not a day without trading, and NSE can fill most of it:
+
+| index      |   days with zero volume in Yahoo |   NSE has the volume for |   no volume from either |
+|:-----------|---------------------------------:|-------------------------:|------------------------:|
+| Nifty 50   |                              275 |                      242 |                      33 |
+| Bank Nifty |                             1415 |                     1375 |                      40 |
+
+The days without a volume from either source are the 33 trading days from 2012-01-03 to 2012-02-17, before NSE's files begin, and 7 later Bank Nifty days that NSE's archive lacks (2014-12-15, 2015-02-02, 2015-03-12, 2015-03-13, 2015-05-19, 2015-07-08, 2015-10-16).
+
+**What Yahoo's non-zero volume is.** It is in thousands of shares, not shares: on 2013-01-21 Yahoo has 130,900 for Nifty and NSE has 130,866,385. Against NSE's number divided by 1,000, Yahoo is within 5% on 99.1% of the Nifty days and 99.3% of the Bank Nifty days. It is not clean, though: Nifty runs about 3% below NSE in 2015, 2016, 2017 and 2018; Bank Nifty is written in raw shares on 2 days (2013-10-28, 2019-07-04); and 10 Nifty and 5 Bank Nifty days are more than 10% off. So the small non-zero numbers in 2012 are real and not unreliable (Bank Nifty on 2012-05-21: Yahoo 18,400, NSE 18,434,691 shares).
+
+**I decided not to use volume anywhere in the study.** Price-only, so none of this changes a result. If volume were ever needed, NSE's file is the better source.
 
 ## 4. Cleaning rules and what they removed
 | rule                                | series   |   rows | details                                                                                                                                        |
