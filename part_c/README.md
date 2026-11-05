@@ -24,7 +24,7 @@ code/
   04_strategy_research.py    steps 4-5 on the research period (grid, reality check, sensitivity, bootstrap); --nse-filled: grid + reality check side check
   04b_mechanism_checks.py    where the edge comes from, alpha/beta, baselines
   05_freeze_rules.py         writes frozen_rules.json (parameters + hashes). Already run.
-  06_run_oos.py              the single out-of-sample run. Already run, refuses to run again.
+  06_run_oos.py              the single out-of-sample run. Already run, refuses to run again. (It starts its 60-gap window on the first locked day, see "Known limitation" below.)
   07_post_hoc_locked_check.py  data check of the locked 2022-2025 files against NSE, made AFTER the out-of-sample run (post-hoc, changes no result;
                              refuses to run unless oos_run.lock exists and the locked files still match their frozen hashes)
 data/
@@ -59,4 +59,15 @@ outputs/
 
 ## Honest-out-of-sample protocol in one paragraph
 
-Plan first, data second. The 2022-2025 data was downloaded in a separate call and saved in `data/locked_oos/`; `common.load_raw("locked")` raises an error unless an environment variable is set, and only `06_run_oos.py` sets it. I never opened or plotted that file during research. Before the final run, `05_freeze_rules.py` saved the parameters and sha256 hashes of the code and the locked files; `06_run_oos.py` checks them, writes `oos_run.lock` before reading any locked data, and then runs once. Before the freeze I ran it with `--dry-run` on research data to catch bugs. After the run, once the result was known, I opened the locked files a second time to check them against NSE's holiday lists and index files (`07_post_hoc_locked_check.py`, report `outputs/pdf/post_hoc_locked_data_check.pdf`). It found nothing to correct and changed no result; it is labelled post-hoc and the test was not rerun. Known limitation: the out-of-sample run starts its 60-day volatility window at the start of 2022, so the first ~60 trading days of 2022 had no signal.
+Plan first, data second. The 2022-2025 data was downloaded in a separate call and saved in `data/locked_oos/`; `common.load_raw("locked")` raises an error unless an environment variable is set, and only `06_run_oos.py` sets it. I never opened or plotted that file during research. Before the final run, `05_freeze_rules.py` saved the parameters and sha256 hashes of the code and the locked files; `06_run_oos.py` checks them, writes `oos_run.lock` before reading any locked data, and then runs once. Before the freeze I ran it with `--dry-run` on research data to catch bugs. After the run, once the result was known, I opened the locked files a second time to check them against NSE's holiday lists and index files (`07_post_hoc_locked_check.py`, report `outputs/pdf/post_hoc_locked_data_check.pdf`). It found nothing to correct and changed no result; it is labelled post-hoc and the test was not rerun. One known limitation of the run itself is described in the next section.
+
+## Known limitation of the out-of-sample run: no position before 4 April 2022
+
+The locked data starts on 3 January 2022, but the rule could not trade from that day. It decides whether an overnight gap is "big" by comparing it with the standard deviation of the previous 60 gaps (`code/strategy.py`, function `gap_signal`: days without enough history stay flat). The out-of-sample run read only the locked file, so it counted those 60 gaps from 3 January 2022 instead of using the last 60 days of 2021, which were already known history and would have been a legitimate warm-up. The consequences:
+
+- The 60-gap window is full on 31 March 2022, the first signal can exist on 1 April, and the first entry is at the open of 4 April 2022. So the first 62 of the 984 days (6.3%) held no position.
+- The effective out-of-sample trading period is April 2022 to December 2025, about 3.75 years, not the four years of the locked file.
+- The CAGR, Sharpe and drawdown of the run include those flat days, while buy and hold covers the whole of 2022, so that comparison is not exactly like for like.
+- I cannot say whether the late start helped or hurt, because the trades that were missing were never computed. I did not rerun, to keep to the plan of a single look at the locked data, and `06_run_oos.py` is hash-locked, so it could not be changed after the freeze in any case.
+
+The same point is made in section 8 of the research note, and a short reading note was added at the top of `outputs/markdown/oos_results.md` (and its PDF) after the run. No number in that report was changed.

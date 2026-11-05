@@ -3,6 +3,8 @@
 Frozen parameters: instrument=Nifty50, k=0.5, window=60, hold=2 days, side=both, cost=0.05% per side.
 Run at 2026-11-03 15:49:24.
 
+**Reading note, added after the run (5 Nov 2026). Every number below is exactly as the run wrote it.** The locked data starts on 3 Jan 2022, but the rule needs the previous 60 overnight gaps to judge what a big gap is, and the run counted them from that first day instead of using the end of 2021. The window was full on 31 Mar 2022, the first signal was possible on 1 Apr and the first entry on 4 Apr 2022, so the first 62 of the 984 days held no position. The effective trading period is April 2022 to December 2025, the CAGR, Sharpe and drawdown below include those flat days, and buy and hold covers the whole of 2022. I cannot say whether the late start helped or hurt, and the test was not rerun. See "Known limitation" in `part_c/README.md` and section 8 of the research note.
+
 ## 1. Data quality of the locked period (same cleaning function, nothing tuned)
 
 | rule                                | series   |   rows | details                                                                                |

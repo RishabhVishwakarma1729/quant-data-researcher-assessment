@@ -19,6 +19,7 @@ Rishabh Vishwakarma. Technical assessment, Part C. Data: Nifty 50 and Bank Nifty
 | Same rule on Bank Nifty, Sharpe | 0.79 | -0.17 | n/a |
 
 - The bootstrap 95% interval for the out-of-sample Sharpe is -0.22 to 1.83, so it cannot be separated from zero or from buy and hold. Sharpe uses a risk-free rate of 0.
+- The rule could not hold a position before 4 Apr 2022 (it needs 60 earlier gaps, see section 8). The out-of-sample numbers include those flat days; buy and hold does not skip them.
 
 ## 2. How I kept the out-of-sample set clean
 
@@ -34,7 +35,7 @@ Rishabh Vishwakarma. Technical assessment, Part C. Data: Nifty 50 and Bank Nifty
 ## 3. Data
 
 - The source is Yahoo Finance (tickers ^NSEI and ^NSEBANK), raw daily OHLCV, and the full report is in `outputs/pdf/data_quality_report.pdf`. I compared it with NSE's own daily index files, and the Nifty open and close are identical on all 2,404 days that could be compared.
-- **Missing days:** Bank Nifty has 12 dates that Nifty lacks, and six of them are 1 January, when NSE trades. I checked all 12 against NSE's official holiday lists and none is a holiday, so they are real trading days missing from Yahoo's Nifty series. The same check found 3 more real trading days missing from both series (26 Oct 2012, 13 Feb 2019, 29 Mar 2019). NSE's own files have 14 of these 15 days. Putting them back moves the research Sharpe only from 1.25 to 1.23, and the scan and the choice of rule come out the same (`outputs/pdf/nse_filled_side_check.pdf`). I still kept only dates present in both series, so that research and out-of-sample come from one source.
+- **Missing days:** Bank Nifty has 12 dates that Nifty lacks, and six of them are 1 January, when NSE trades. I checked all 12 against NSE's official holiday lists and none is a holiday, so they are real trading days missing from Yahoo's Nifty series. The same check found 3 more real trading days missing from both series (26 Oct 2012, 13 Feb 2019, 29 Mar 2019). NSE's own files have 14 of these 15 days; putting them back moves the research Sharpe only from 1.25 to 1.23 and changes neither the scan nor the choice of rule (`outputs/pdf/nse_filled_side_check.pdf`). I kept only dates present in both series, so research and out-of-sample come from one source.
 - **Bad print:** Bank Nifty on 10 Nov 2016 is a frozen bar (O=H=L=C, volume 0), and I dropped it.
 - **Special sessions:** I dropped three one-hour Diwali Muhurat sessions. The Saturday budget sessions (2015, 2020) are missing from the data, so their moves sit inside the next Monday.
 - **Volume:** Yahoo's is empty for Nifty in 2012 and zero on 1,415 of 2,461 Bank Nifty days. NSE's own files have it from 21 Feb 2012, but I do not use volume anywhere.
@@ -61,14 +62,14 @@ Rishabh Vishwakarma. Technical assessment, Part C. Data: Nifty 50 and Bank Nifty
 | ML: outliers | Isolation forest (49 days flagged, 65% of them in 2020) | No effect after outlier days (p above 0.46) |
 | ML: direction | Walk-forward logistic and gradient boosting, 2016-2021 | Logistic 54.6% vs 54.6% baseline (Nifty); boosting 51.4% vs 54.6%. No skill |
 
-- The gap result held up under the checks I could think of: winsorising at 1%/99% (t about 4), dropping 2020 (t 3.3 for Nifty and 2.3 for Bank Nifty), rank correlation (p < 0.0001), a monotonic quintile pattern, and a positive sign in 9 of 10 years (but about zero in 2017-2019).
+- The gap result held up under the checks I could think of: winsorising at 1%/99% (t about 4), dropping 2020 (t 3.3 for Nifty and 2.3 for Bank Nifty), rank correlation (p < 0.0001), a monotonic quintile pattern, and a positive sign in 9 of 10 years (about zero in 2017-2019).
 - The same rule driven by close-to-close or intraday returns, or by shuffled gaps, loses money. Details are in `outputs/pdf/gap_diagnostics.pdf` and `outputs/pdf/mechanism_checks.pdf`.
 
 ![p-values](../outputs/figures/02_pvalue_histograms.png)
 
 ## 5. Hypothesis (Step 3): who is on the other side
 
-- This is the reasoning I had when I froze the rule, but it is written up after the out-of-sample run (only the plan file was written beforehand), so please treat it as an explanation that fits and not as a pre-registered claim.
+- I had this reasoning when I froze the rule, but it was written up after the out-of-sample run (only the plan file came first), so please treat it as an explanation that fits, not a pre-registered claim.
 - **Idea:** the overnight gap carries news that arrived while India was shut (US close, Asia, GIFT Nifty). Foreign institutions are the marginal price setters in Nifty and they split big orders over several days to limit their impact, so a large gap up suggests more buying in the next day or two.
 - **Likely counterparties:** domestic retail and intraday traders who fade gaps ("gap fill"), and liquidity providers who are slow to move their quotes.
 - **Why it may not be arbitraged away:** the effect is small against costs (the best bucket earned about 25 bps against a 10 bps round-trip cost), it is lumpy, and most of the money came in volatile periods that put people off.
@@ -115,7 +116,7 @@ Rishabh Vishwakarma. Technical assessment, Part C. Data: Nifty 50 and Bank Nifty
 
 **Out of sample**
 
-- The strategy returned 16.4%, 1.0%, 4.9% and 16.1% in 2022-2025, against 4.2%, 19.8%, 8.8% and 9.9% for buy and hold, with an average exposure of only 20% and a beta of 0.05.
+- The strategy returned 16.4%, 1.0%, 4.9% and 16.1% in 2022-2025 (it was flat until April 2022), against 4.2%, 19.8%, 8.8% and 9.9% for buy and hold, with an average exposure of only 20% and a beta of 0.05.
 - Alpha was 9.3% a year, but with t = 1.37 it is not significant. Costs cut the CAGR from 17.3% (gross) to 9.6% (net), about 45% of the gross return.
 - The gap effect is about zero (Nifty -0.2 bps per standard deviation, against +12.8 in research), the quintile pattern is no longer monotonic, and the same rule on Bank Nifty had a Sharpe of -0.17.
 
@@ -133,11 +134,11 @@ Rishabh Vishwakarma. Technical assessment, Part C. Data: Nifty 50 and Bank Nifty
 ## 8. Limits and things I would do differently
 
 - Yahoo data is not the exchange file. I checked it against NSE's holiday lists and daily index files for 2012-2021, and 15 real trading days are missing from it. The 2013 and 2014 holiday lists come from a broker's copy, but NSE's own files do not contradict them. 33 Nifty bars before NSE's files start (21 Feb 2012), and 12 later days its archive lacks, could not be checked. The same checks on the locked data, made after the single out-of-sample run, found nothing to change.
-- The out-of-sample run started the 60-day volatility window on the first day of 2022, so the first ~60 trading days of 2022 had no signal (the flat line in the chart). This is a limitation of how I set up the test. It does not flatter the result, but some early-2022 trades are missing, and I did not rerun, to keep to the plan of a single look at the locked data.
+- **The out-of-sample run could not trade before April 2022.** The locked data starts on 3 Jan 2022, but the rule needs the previous 60 overnight gaps, and the run counted them from that first day instead of using the end of 2021. The first entry was on 4 Apr 2022, so the first 62 of 984 days (6.3%) held no position (the flat start of the chart) and the effective period is April 2022 to December 2025. This was a flaw in my setup. I cannot say whether it helped or hurt, because the missing trades were never computed, and I did not rerun, to keep to a single look at the locked data. Buy and hold covers the whole period, so that comparison is not exactly like for like.
 - Open prices are index values at 9:15 and cannot be traded exactly, so 0.05% per side may be too low for the first minutes of the session. This is one of the main risks to the result.
 - Sharpe uses a risk-free rate of 0, and returns are not adjusted for the extra volatility of a Monday or post-holiday day.
 - The grid and the 98 tests are all the searching I did, and all of it is counted. Nifty and Bank Nifty tests are strongly correlated, so Bonferroni is conservative.
 - Kaggle GPU was not used, because the data is about 2,500 rows per index and every model is small, so the whole project runs in a few minutes on a laptop CPU.
 - Code and outputs are described in `README.md`, and everything here can be regenerated from `code/` (the final out-of-sample step is designed to run only once).
 
-Thank you for the opportunity to work on this assessment. I would be glad to walk through any part of it in the follow-up round.
+Thank you for the opportunity. I would be glad to walk through any part of this in the follow-up round.
